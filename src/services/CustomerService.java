@@ -1,7 +1,6 @@
 package services;
 
-import Utils.ExceptionHandler;
-import Utils.ValidationUtils;
+import utils.ValidationUtils;
 import entities.Customer;
 import repositories.CustomerRepository;
 
@@ -16,8 +15,7 @@ public class CustomerService {
         try {
             return customerRepository.getAll();
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "fetching all customers");
-            return new ArrayList<>(); // Return empty list on error
+            return new ArrayList<>();
         }
     }
 
@@ -26,7 +24,6 @@ public class CustomerService {
         try {
             return customerRepository.getById(id);
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "fetching customer by ID");
             return null;
         }
     }
@@ -41,7 +38,7 @@ public class CustomerService {
         try {
             customerRepository.addCustomer(customer);
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "adding customer");
+            System.out.println("Error while adding customer: " + e.getMessage());
         }
     }
 
@@ -51,11 +48,10 @@ public class CustomerService {
             System.out.println("Invalid email format. Please try again.");
             return;
         }
-
         try {
             customerRepository.updateCustomerEmail(customerId, email);
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "updating customer email");
+            System.out.println("Error while updating customer email: " + e.getMessage());
         }
     }
 }
