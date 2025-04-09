@@ -1,4 +1,5 @@
 import controllers.CustomerController;
+import controllers.ProductController;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -24,7 +25,8 @@ public class MainMenu {
                     customerController.runMenu();
                 }
                 case "2" -> {
-                    // ProductController logic goes here
+                    ProductController productController = new ProductController();
+                    productController.runMenu();
                 }
                 case "3" -> {
                     // OrderController logic goes here
