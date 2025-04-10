@@ -1,21 +1,14 @@
 package repositories;
-
 import entities.Product;
-import utils.RowMapper;
 import utils.SqlUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
 
+import static utils.Mappers.productMapper;
+
 public class ProductRepository {
-    private static final RowMapper<Product> productMapper = resultSet -> new Product(
-            resultSet.getInt("product_id"),
-            resultSet.getInt("manufacturer_id"),
-            resultSet.getString("name"),
-            resultSet.getString("description"),
-            resultSet.getDouble("price"),
-            resultSet.getInt("stock_quantity")
-    );
+
 
 
     // Get all products
@@ -79,30 +72,18 @@ public class ProductRepository {
 
     public int addProductAndReturnId(Product product) throws SQLException {
         String query = "INSERT INTO products (manufacturer_id, name, description, price, stock_quantity) VALUES (?, ?, ?, ?, ?)";
-
-        try (Connection conn = SqlUtils.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setInt(1, product.getManufacturerId());
-            stmt.setString(2, product.getName());
-            stmt.setString(3, product.getDescription());
-            stmt.setDouble(4, product.getPrice());
-            stmt.setInt(5, product.getStockQuantity());
-
-            stmt.executeUpdate();
-
-            ResultSet keys = stmt.getGeneratedKeys();
-            if (keys.next()) {
-                return keys.getInt(1);
-            } else {
-                throw new SQLException("Failed to retrieve product ID after insert.");
-            }
-        }
+        return SqlUtils.executeInsertAndReturnId(
+                query,
+                product.getManufacturerId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStockQuantity()
+        );
     }
 
     public void addProductToCategory(int productId, int categoryId) throws SQLException {
         String query = "INSERT INTO products_categories (product_id, category_id) VALUES (?, ?)";
         SqlUtils.executeUpdate(query, productId, categoryId);
     }
-
 }

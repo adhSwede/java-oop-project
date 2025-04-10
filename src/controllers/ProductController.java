@@ -36,7 +36,7 @@ public class ProductController {
                 case "1" -> ConsoleHelper.printList(productService.getAllProducts());
 
                 case "2" -> {
-                    int id = InputUtils.promptInt(sc, "Enter product ID: ");
+                    int id = InputUtils.promptPositiveInt(sc, "Enter product ID: ");
                     Product product = productService.getProductById(id);
                     System.out.println(product != null ? product : "Product not found.");
                 }
@@ -60,11 +60,11 @@ public class ProductController {
                     System.out.print("Enter product category: ");
                     String categoryName = sc.nextLine();
 
-                    int manufacturerId = InputUtils.promptInt(sc, "Enter manufacturer ID: ");
+                    int manufacturerId = InputUtils.promptPositiveInt(sc, "Enter manufacturer ID: ");
                     System.out.print("Enter product description: ");
                     String description = sc.nextLine();
-                    double price = InputUtils.promptDouble(sc, "Enter product price: ");
-                    int stockQuantity = InputUtils.promptInt(sc, "Enter stock quantity: ");
+                    double price = InputUtils.promptPositiveDouble(sc, "Enter product price: ");
+                    int stockQuantity = InputUtils.promptPositiveInt(sc, "Enter stock quantity: ");
 
                     Product newProduct = new Product(manufacturerId, name, description, price, stockQuantity);
                     int productId = productService.addProductAndReturnId(newProduct);
@@ -75,14 +75,14 @@ public class ProductController {
                 }
 
                 case "6" -> {
-                    int id = InputUtils.promptInt(sc, "Enter product ID: ");
-                    double price = InputUtils.promptDouble(sc, "Enter new price: ");
+                    int id = InputUtils.promptPositiveInt(sc, "Enter product ID: ");
+                    double price = InputUtils.promptPositiveDouble(sc, "Enter new price: ");
                     productService.updatePrice(id, price);
                 }
 
                 case "7" -> {
-                    int id = InputUtils.promptInt(sc, "Enter product ID: ");
-                    int quantity = InputUtils.promptInt(sc, "Enter new stock quantity: ");
+                    int id = InputUtils.promptPositiveInt(sc, "Enter product ID: ");
+                    int quantity = InputUtils.promptPositiveInt(sc, "Enter new stock quantity: ");
                     productService.updateStock(id, quantity);
                 }
 

@@ -54,4 +54,8 @@ public class CustomerService {
             System.out.println("Error while updating customer email: " + e.getMessage());
         }
     }
+
+    public boolean customerExists(int customerId) throws SQLException {
+        return customerRepository.existsById(customerId);
+    }
 }
