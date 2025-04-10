@@ -16,4 +16,9 @@ public class ExceptionHandler {
         LOGGER.log(Level.SEVERE, "Error during " + action, e);
         System.out.println("An unexpected error occurred. Please contact support.");
     }
+
+    public static void handleUserError(Exception e, String action) {
+        System.out.println("⚠️  " + e.getMessage());
+        LOGGER.log(Level.WARNING, "User error during " + action, e);
+    }
 }

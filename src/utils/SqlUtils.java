@@ -58,4 +58,27 @@ public class SqlUtils {
             throw e;
         }
     }
+
+    public static int executeInsertAndReturnId(String query, Object... params) throws SQLException {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
+            }
+
+            stmt.executeUpdate();
+
+            ResultSet keys = stmt.getGeneratedKeys();
+            if (keys.next()) {
+                return keys.getInt(1);
+            } else {
+                throw new SQLException("No generated key returned.");
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler.handleSQLException(e, "executing insert with return ID: " + query);
+            throw e;
+        }
+    }
 }

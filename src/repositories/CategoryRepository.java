@@ -1,16 +1,12 @@
 package repositories;
 import entities.Category;
-import utils.RowMapper;
 import utils.SqlUtils;
-
 import java.sql.*;
 import java.util.ArrayList;
 
+import static utils.Mappers.categoryMapper;
+
 public class CategoryRepository {
-    private static final RowMapper<Category> categoryMapper = resultSet -> new Category(
-            resultSet.getInt("category_id"),
-            resultSet.getString("name")
-    );
 
     public ArrayList<Category> getAll() throws SQLException {
         String query = "SELECT * FROM categories";

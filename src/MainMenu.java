@@ -1,4 +1,5 @@
 import controllers.CustomerController;
+import controllers.OrderController;
 import controllers.ProductController;
 
 import java.sql.SQLException;
@@ -29,7 +30,8 @@ public class MainMenu {
                     productController.runMenu();
                 }
                 case "3" -> {
-                    // OrderController logic goes here
+                    OrderController orderController = new OrderController();
+                    orderController.runMenu();
                 }
                 case "4" -> {
                     System.out.println("Exiting the system...");

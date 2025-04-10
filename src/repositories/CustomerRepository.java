@@ -1,22 +1,13 @@
 package repositories;
-
 import entities.Customer;
-import utils.RowMapper;
 import utils.SqlUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerRepository {
-    private static final RowMapper<Customer> customerMapper = resultSet -> new Customer(
-            resultSet.getInt("customer_id"),
-            resultSet.getString("name"),
-            resultSet.getString("email"),
-            resultSet.getString("phone"),
-            resultSet.getString("address"),
-            resultSet.getString("password")
-    );
+import static utils.Mappers.customerMapper;
 
+public class CustomerRepository {
 
     // Fetch all customers
     public ArrayList<Customer> getAll() throws SQLException {
@@ -58,5 +49,18 @@ public class CustomerRepository {
                 email,
                 String.valueOf(customerId)
         );
+    }
+
+    @SuppressWarnings("SqlResolve")
+    public boolean existsById(int customerId) throws SQLException {
+        String query = "SELECT 1 FROM customers WHERE customer_id = ?";
+        try (Connection conn = SqlUtils.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, customerId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
     }
 }

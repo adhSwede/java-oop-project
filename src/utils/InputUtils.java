@@ -17,13 +17,22 @@ public class InputUtils {
         }
     }
 
-    public static int promptInt(Scanner sc, String prompt) {
-        String input = promptUntilValid(sc, prompt, ValidationUtils::isValidInteger, "Invalid number.");
+    public static int promptPositiveInt(Scanner sc, String prompt) {
+        String input = promptUntilValid(
+                sc,
+                prompt,
+                i -> ValidationUtils.isValidInteger(i) && Integer.parseInt(i) > 0,
+                "Invalid number. Must be a positive whole number."
+        );
         return Integer.parseInt(input);
     }
 
-    public static double promptDouble(Scanner sc, String prompt) {
-        String input = promptUntilValid(sc, prompt, ValidationUtils::isValidDouble, "Invalid number.");
-        return Double.parseDouble(input);
+
+    public static double promptPositiveDouble(Scanner sc, String prompt) {
+        return Double.parseDouble(promptUntilValid(
+                sc, prompt,
+                input -> ValidationUtils.isValidDouble(input) && Double.parseDouble(input) > 0,
+                "Invalid number. Must be a positive value."
+        ));
     }
 }
