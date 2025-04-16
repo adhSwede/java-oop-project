@@ -1,6 +1,7 @@
 package controllers;
 
-import entities.Customer;
+import contexts.SessionContext;
+import entities.users.Customer;
 import services.CustomerService;
 import utils.ConsoleHelper;
 import utils.InputUtils;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomerController {
-    CustomerService customerService = new CustomerService();
+    private final CustomerService customerService = new CustomerService();
 
     public void runMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
@@ -106,13 +107,12 @@ public class CustomerController {
     private void updateCustomerEmail() {
         Scanner sc = new Scanner(System.in);
 
-        String idInput = InputUtils.promptUntilValid(
-                sc,
-                "Enter customer ID: ",
-                ValidationUtils::isValidInteger,
-                "Invalid input. Please enter a valid integer for customer ID."
-        );
-        int customerId = Integer.parseInt(idInput);
+        if (SessionContext.isGuest()) {
+            ConsoleHelper.printWarning("You must be logged in to update your email.");
+            return;
+        }
+        int customerId = SessionContext.getCurrentCustomer().getCustomerId();
+
 
         String newEmail = InputUtils.promptUntilValid(
                 sc,

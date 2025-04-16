@@ -1,14 +1,16 @@
 package services;
 
+import entities.users.User;
+import factories.RepositoryFactory;
 import utils.ValidationUtils;
-import entities.Customer;
+import entities.users.Customer;
 import repositories.CustomerRepository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerService {
-    CustomerRepository customerRepository = new CustomerRepository();
+    private final CustomerRepository customerRepository = RepositoryFactory.getCustomerRepository();
 
     // Get all customers
     public ArrayList<Customer> getAllCustomers() {
@@ -52,6 +54,16 @@ public class CustomerService {
             customerRepository.updateCustomerEmail(customerId, email);
         } catch (SQLException e) {
             System.out.println("Error while updating customer email: " + e.getMessage());
+        }
+    }
+
+    public User loginAsCustomer(String email, String password) throws SQLException {
+        Customer customer = customerRepository.getByEmail(email);
+
+        if (customer != null && customer.getPassword().equals(password)) {
+            return customer;
+        } else {
+            throw new IllegalArgumentException("Invalid email or password.");
         }
     }
 

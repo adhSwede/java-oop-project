@@ -2,12 +2,17 @@ package controllers;
 
 import entities.OrderProduct;
 import entities.Product;
+
 import services.OrderService;
 import services.ProductService;
+
 import utils.ConsoleHelper;
 import utils.ExceptionHandler;
 import utils.InputUtils;
+
 import viewmodels.OrderSummary;
+
+import contexts.SessionContext;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,8 +20,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OrderController {
-    OrderService orderService = new OrderService();
-    ProductService productService = new ProductService();
+    private final OrderService orderService = new OrderService();
+    private final ProductService productService = new ProductService();
 
     public void runMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
@@ -44,8 +49,14 @@ public class OrderController {
     public void placeOrder() {
         Scanner sc = new Scanner(System.in);
 
+        if (SessionContext.isGuest()) {
+            ConsoleHelper.printWarning("You must be logged in to do this.");
+            return;
+        }
+
+
         try {
-            int customerId = InputUtils.promptPositiveInt(sc, "Enter customer ID: ");
+            int customerId = SessionContext.getCurrentCustomer().getCustomerId();
             int productId = InputUtils.promptPositiveInt(sc, "Enter product ID: ");
             int quantity = InputUtils.promptPositiveInt(sc, "Enter quantity: ");
 
@@ -75,9 +86,13 @@ public class OrderController {
     }
 
     public void viewCustomerOrderHistory() throws SQLException {
-        Scanner sc = new Scanner(System.in);
-        int customerId = InputUtils.promptPositiveInt(sc, "Enter customer ID: ");
+        if (SessionContext.isGuest()) {
+            ConsoleHelper.printWarning("You must be logged in to view your order history.");
+            return;
+        }
+        int customerId = SessionContext.getCurrentCustomer().getCustomerId();
         List<OrderSummary> summaries = orderService.getSummariesByCustomerId(customerId);
         ConsoleHelper.printList(summaries);
     }
+
 }

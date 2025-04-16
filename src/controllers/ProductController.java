@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ProductController {
-    ProductService productService = new ProductService();
-    CategoryService categoryService = new CategoryService();
+    private final ProductService productService = new ProductService();
+    private final CategoryService categoryService = new CategoryService();
 
     public void runMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
