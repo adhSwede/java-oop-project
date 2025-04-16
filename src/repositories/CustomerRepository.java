@@ -1,9 +1,10 @@
 package repositories;
-import entities.Customer;
+import entities.users.Customer;
 import utils.SqlUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static utils.Mappers.customerMapper;
 
@@ -29,6 +30,12 @@ public class CustomerRepository {
         return customers.isEmpty() ? null : customers.getFirst();
     }
 
+    public Customer getByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM customers WHERE email = ?";
+        List<Customer> customers = SqlUtils.executeAndMap(query, customerMapper, email);
+
+        return customers.isEmpty() ? null : customers.get(0);
+    }
 
     // Add new customer
     public void addCustomer(Customer customer) throws SQLException {
@@ -63,4 +70,5 @@ public class CustomerRepository {
             }
         }
     }
+
 }

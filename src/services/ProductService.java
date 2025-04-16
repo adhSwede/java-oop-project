@@ -1,13 +1,14 @@
 package services;
 
 import entities.Product;
+import factories.RepositoryFactory;
 import repositories.ProductRepository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProductService {
-    ProductRepository productRepository = new ProductRepository();
+    private final ProductRepository productRepository = RepositoryFactory.getProductRepository();
 
     public ArrayList<Product> getAllProducts() throws SQLException {
         return productRepository.getAll();

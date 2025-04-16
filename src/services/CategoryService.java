@@ -1,13 +1,14 @@
 package services;
 
 import entities.Category;
+import factories.RepositoryFactory;
 import repositories.CategoryRepository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CategoryService {
-    CategoryRepository categoryRepository = new CategoryRepository();
+    private final CategoryRepository categoryRepository = RepositoryFactory.getCategoryRepository();
 
     public ArrayList<Category> getAllCategories() throws SQLException {
         return categoryRepository.getAll();

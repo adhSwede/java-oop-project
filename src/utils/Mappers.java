@@ -1,6 +1,8 @@
 package utils;
 
 import entities.*;
+import entities.users.Admin;
+import entities.users.Customer;
 import viewmodels.OrderSummary;
 
 import java.time.LocalDate;
@@ -19,6 +21,7 @@ public class Mappers {
             resultSet.getString("address"),
             resultSet.getString("password")
     );
+
 
     public static final RowMapper<OrderProduct> orderProductMapper = resultSet -> new OrderProduct(
             resultSet.getInt("order_product_id"),
@@ -48,5 +51,11 @@ public class Mappers {
             resultSet.getInt("customer_id"),
             resultSet.getString("customer_name"),
             LocalDate.parse(resultSet.getString("order_date").split(" ")[0])
+    );
+
+    public static final RowMapper<Admin> adminMapper = resultSet -> new Admin(
+            resultSet.getInt("admin_id"),
+            resultSet.getString("username"),
+            resultSet.getString("password")
     );
 }

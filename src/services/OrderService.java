@@ -3,6 +3,7 @@ package services;
 import entities.Order;
 import entities.OrderProduct;
 import entities.Product;
+import factories.RepositoryFactory;
 import repositories.CustomerRepository;
 import repositories.OrderRepository;
 import repositories.ProductRepository;
@@ -18,10 +19,10 @@ import java.util.List;
 import static utils.Mappers.orderMapper;
 
 public class OrderService {
-    OrderRepository orderRepository = new OrderRepository();
-    ProductRepository productRepository = new ProductRepository();
-    OrderProductRepository orderProductRepository = new OrderProductRepository();
-    CustomerRepository customerRepository = new CustomerRepository();
+    private final OrderRepository orderRepository = RepositoryFactory.getOrderRepository();
+    private final ProductRepository productRepository = RepositoryFactory.getProductRepository();
+    private final OrderProductRepository orderProductRepository = RepositoryFactory.getOrderProductRepository();
+    private final CustomerRepository customerRepository = RepositoryFactory.getCustomerRepository();
 
     private void ensureStockAvailable(List<OrderProduct> orderProducts) throws SQLException {
         for (OrderProduct item : orderProducts) {

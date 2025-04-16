@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class SqlUtils {
 
-    public static final String URL = "jdbc:sqlite:webbutiken.db";
+    public static final String URL = "jdbc:sqlite:databases/webbutiken.db";
 
     // Get a database connection
     public static Connection getConnection() throws SQLException {
