@@ -3,6 +3,7 @@ package controllers;
 import entities.OrderProduct;
 import entities.Product;
 
+import factories.ServiceFactory;
 import services.OrderService;
 import services.ProductService;
 
@@ -20,8 +21,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OrderController {
-    private final OrderService orderService = new OrderService();
-    private final ProductService productService = new ProductService();
+    private final OrderService orderService = ServiceFactory.getOrderService();
+    private final ProductService productService = ServiceFactory.getProductService();
 
     public void runMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
@@ -56,7 +57,7 @@ public class OrderController {
 
 
         try {
-            int customerId = SessionContext.getCurrentCustomer().getCustomerId();
+            int customerId = SessionContext.getCurrentCustomer().getUserId();
             int productId = InputUtils.promptPositiveInt(sc, "Enter product ID: ");
             int quantity = InputUtils.promptPositiveInt(sc, "Enter quantity: ");
 
@@ -90,7 +91,7 @@ public class OrderController {
             ConsoleHelper.printWarning("You must be logged in to view your order history.");
             return;
         }
-        int customerId = SessionContext.getCurrentCustomer().getCustomerId();
+        int customerId = SessionContext.getCurrentCustomer().getUserId();
         List<OrderSummary> summaries = orderService.getSummariesByCustomerId(customerId);
         ConsoleHelper.printList(summaries);
     }

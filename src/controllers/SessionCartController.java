@@ -1,5 +1,6 @@
 package controllers;
 
+import factories.ServiceFactory;
 import services.ProductService;
 import services.SessionCartService;
 import utils.ConsoleHelper;
@@ -11,8 +12,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class SessionCartController {
-    private final SessionCartService cartService = new SessionCartService();
-    private final ProductService productService = new ProductService();
+    private final SessionCartService cartService = ServiceFactory.getSessionCartService();
+    private final ProductService productService = ServiceFactory.getProductService();
 
     public void runMenu() {
         Scanner sc = new Scanner(System.in);

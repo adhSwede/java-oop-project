@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class AdminService {
     private final AdminRepository adminRepository = RepositoryFactory.getAdminRepository();
 
+    // #################### [ Get ] ####################
     public ArrayList<Admin> getAllAdmins() throws SQLException {
         return adminRepository.getAll();
     }
@@ -18,6 +19,7 @@ public class AdminService {
        return adminRepository.getByUsername(username);
     }
 
+    // #################### [ Auth ] ####################
     public boolean login(String username, String password) throws SQLException {
         Admin admin = adminRepository.getByUsername(username);
         return admin != null && admin.getPassword().equals(password);

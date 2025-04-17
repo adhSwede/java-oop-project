@@ -2,6 +2,7 @@ package controllers;
 
 import contexts.SessionContext;
 import entities.users.Customer;
+import factories.ServiceFactory;
 import services.CustomerService;
 import utils.ConsoleHelper;
 import utils.InputUtils;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomerController {
-    private final CustomerService customerService = new CustomerService();
+    private final CustomerService customerService = ServiceFactory.getCustomerService();
 
     public void runMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
@@ -111,7 +112,7 @@ public class CustomerController {
             ConsoleHelper.printWarning("You must be logged in to update your email.");
             return;
         }
-        int customerId = SessionContext.getCurrentCustomer().getCustomerId();
+        int customerId = SessionContext.getCurrentCustomer().getUserId();
 
 
         String newEmail = InputUtils.promptUntilValid(

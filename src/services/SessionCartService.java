@@ -1,6 +1,6 @@
 package services;
 
-import entities.SessionCart;
+import entities.carts.SessionCart;
 
 import java.util.Map;
 

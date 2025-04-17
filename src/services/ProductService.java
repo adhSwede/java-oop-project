@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class ProductService {
     private final ProductRepository productRepository = RepositoryFactory.getProductRepository();
 
+    // #################### [ Get ] ####################
     public ArrayList<Product> getAllProducts() throws SQLException {
         return productRepository.getAll();
     }
@@ -26,16 +27,9 @@ public class ProductService {
         return productRepository.getByCategory(category);
     }
 
+    // #################### [ Insert ] ####################
     public void addProduct(Product product) throws SQLException {
         productRepository.addProduct(product);
-    }
-
-    public void updatePrice(int id, double price) throws SQLException {
-        productRepository.updatePrice(id, price);
-    }
-
-    public void updateStock(int id, int quantity) throws SQLException {
-        productRepository.updateStockQuantity(id, quantity);
     }
 
     public int addProductAndReturnId(Product product) throws SQLException {
@@ -46,4 +40,12 @@ public class ProductService {
         productRepository.addProductToCategory(productId, categoryId);
     }
 
+    // #################### [ Update ] ####################
+    public void updatePrice(int id, double price) throws SQLException {
+        productRepository.updatePrice(id, price);
+    }
+
+    public void updateStock(int id, int quantity) throws SQLException {
+        productRepository.updateStockQuantity(id, quantity);
+    }
 }

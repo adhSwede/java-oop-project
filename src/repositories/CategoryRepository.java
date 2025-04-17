@@ -8,6 +8,7 @@ import static utils.Mappers.categoryMapper;
 
 public class CategoryRepository {
 
+    // #################### [ Get ] ####################
     public ArrayList<Category> getAll() throws SQLException {
         String query = "SELECT * FROM categories";
         return SqlUtils.executeAndMap(query, categoryMapper);
@@ -25,6 +26,7 @@ public class CategoryRepository {
         return ids.isEmpty() ? -1 : ids.getFirst();
     }
 
+    // #################### [ Insert ] ####################
     public void addCategory(Category category) throws SQLException {
         SqlUtils.executeUpdate("INSERT INTO categories (name) VALUES (?)", category.getName());
     }

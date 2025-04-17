@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.Product;
+import factories.ServiceFactory;
 import services.CategoryService;
 import services.ProductService;
 import utils.ConsoleHelper;
@@ -10,8 +11,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ProductController {
-    private final ProductService productService = new ProductService();
-    private final CategoryService categoryService = new CategoryService();
+    private final ProductService productService = ServiceFactory.getProductService();
+    private final CategoryService categoryService = ServiceFactory.getCategoryService();
 
     public void runMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
