@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class CustomerService {
     private final CustomerRepository customerRepository = RepositoryFactory.getCustomerRepository();
 
-    // Get all customers
+    // #################### [ Get ] ####################
     public ArrayList<Customer> getAllCustomers() {
         try {
             return customerRepository.getAll();
@@ -21,7 +21,6 @@ public class CustomerService {
         }
     }
 
-    // Get customer by ID
     public Customer getCustomer(int id) {
         try {
             return customerRepository.getById(id);
@@ -30,7 +29,11 @@ public class CustomerService {
         }
     }
 
-    // Add a new customer
+    public boolean customerExists(int customerId) throws SQLException {
+        return customerRepository.existsById(customerId);
+    }
+
+    // #################### [ Insert ] ####################
     public void addCustomer(Customer customer) {
         if (!ValidationUtils.isValidEmail(customer.getEmail())) {
             System.out.println("Invalid email format. Please try again.");
@@ -44,7 +47,7 @@ public class CustomerService {
         }
     }
 
-    // Update customer email
+    // #################### [ Update ] ####################
     public void updateCustomerEmail(int customerId, String email) {
         if (!ValidationUtils.isValidEmail(email)) {
             System.out.println("Invalid email format. Please try again.");
@@ -57,6 +60,7 @@ public class CustomerService {
         }
     }
 
+    // #################### [ Auth ] ####################
     public User loginAsCustomer(String email, String password) throws SQLException {
         Customer customer = customerRepository.getByEmail(email);
 
@@ -65,9 +69,5 @@ public class CustomerService {
         } else {
             throw new IllegalArgumentException("Invalid email or password.");
         }
-    }
-
-    public boolean customerExists(int customerId) throws SQLException {
-        return customerRepository.existsById(customerId);
     }
 }

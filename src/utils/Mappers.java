@@ -3,6 +3,7 @@ package utils;
 import entities.*;
 import entities.users.Admin;
 import entities.users.Customer;
+import entities.carts.StoredCart;
 import viewmodels.OrderSummary;
 
 import java.time.LocalDate;
@@ -57,5 +58,12 @@ public class Mappers {
             resultSet.getInt("admin_id"),
             resultSet.getString("username"),
             resultSet.getString("password")
+    );
+
+    public static final RowMapper<StoredCart> storedCartMapper = rs -> new StoredCart(
+            rs.getInt("cart_id"),
+            rs.getInt("customer_id"),
+            rs.getString("name"),
+            rs.getBoolean("is_active")
     );
 }

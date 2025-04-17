@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class CategoryService {
     private final CategoryRepository categoryRepository = RepositoryFactory.getCategoryRepository();
 
+    // #################### [ Get ] ####################
     public ArrayList<Category> getAllCategories() throws SQLException {
         return categoryRepository.getAll();
     }
@@ -18,6 +19,7 @@ public class CategoryService {
         return categoryRepository.getCategoryNameById(id);
     }
 
+    // #################### [ Insert ] ####################
     public int getOrCreateCategoryId(String name) throws SQLException {
         int id = categoryRepository.getCategoryIdByName(name);
         if (id == -1) {

@@ -2,6 +2,7 @@ package controllers;
 
 import constants.DefaultCustomers;
 import entities.users.Customer;
+import factories.ServiceFactory;
 import services.AdminService;
 import services.CustomerService;
 import contexts.*;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MainController {
-    final private CustomerService customerService = new CustomerService();
+    final private CustomerService customerService = ServiceFactory.getCustomerService();
 
     public void runMenu() throws SQLException {
         Scanner scanner = new Scanner(System.in);

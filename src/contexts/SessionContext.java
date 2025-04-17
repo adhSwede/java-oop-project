@@ -2,7 +2,7 @@ package contexts;
 
 import constants.DefaultCustomers;
 import entities.users.Customer;
-import entities.SessionCart;
+import entities.carts.SessionCart;
 
 public class SessionContext {
     private static SessionCart sessionCart = new SessionCart();
@@ -18,7 +18,7 @@ public class SessionContext {
     }
 
     public static boolean isGuest() {
-        return currentCustomer.getCustomerId() == DefaultCustomers.GUEST.getCustomerId();
+        return currentCustomer.getUserId() == DefaultCustomers.GUEST.getUserId();
     }
 
     // Session Cart data

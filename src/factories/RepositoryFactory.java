@@ -12,6 +12,7 @@ public class RepositoryFactory {
     private static OrderProductRepository orderProductRepository;
     private static CategoryRepository categoryRepository;
     private static AdminRepository adminRepository;
+    private static StoredCartRepository storedCartRepository;
 
     public static CustomerRepository getCustomerRepository() {
         if (customerRepository == null) {
@@ -53,5 +54,12 @@ public class RepositoryFactory {
             adminRepository = new AdminRepository();
         }
         return adminRepository;
+    }
+
+    public static StoredCartRepository getStoredCartRepository() {
+        if (storedCartRepository == null) {
+            storedCartRepository = new StoredCartRepository();
+        }
+        return storedCartRepository;
     }
 }
