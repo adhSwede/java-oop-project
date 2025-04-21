@@ -1,12 +1,14 @@
 package entities.carts;
 
 import entities.Product;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Cart {
     protected Map<Product, Integer> items = new HashMap<>();
 
+    // #################### [ Add / Remove / Update ] ####################
     public void addProduct(Product product, int quantity) {
         items.merge(product, quantity, Integer::sum);
     }
@@ -23,14 +25,11 @@ public abstract class Cart {
         }
     }
 
+    // #################### [ Totals & State ] ####################
     public double getTotalPrice() {
         return items.entrySet().stream()
                 .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
                 .sum();
-    }
-
-    public Map<Product, Integer> getItems() {
-        return items;
     }
 
     public boolean isEmpty() {
@@ -39,5 +38,10 @@ public abstract class Cart {
 
     public void clearCart() {
         items.clear();
+    }
+
+    // #################### [ Getters ] ####################
+    public Map<Product, Integer> getItems() {
+        return items;
     }
 }

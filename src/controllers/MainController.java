@@ -1,6 +1,6 @@
 package controllers;
 
-import constants.DefaultCustomers;
+import entities.users.Admin;
 import entities.users.Customer;
 import factories.ServiceFactory;
 import services.AdminService;
@@ -19,7 +19,7 @@ public class MainController {
         boolean exit = false;
 
         while (!exit) {
-            ConsoleHelper.printHeader("Webshop Start Menu");
+            ConsoleHelper.printHeader("🏠 Webshop Start Menu");
 
             ConsoleHelper.printOption("1", "Browse as Customer");
             ConsoleHelper.printOption("2", "Login as Customer");
@@ -30,15 +30,9 @@ public class MainController {
             String choice = scanner.nextLine().trim().toLowerCase();
 
             switch (choice) {
-                case "1" -> new ProductController().runMenu(); // Customer browsing view
+                case "1" -> new CustomerShopController().runCustomerShopMenu();
                 case "2" -> handleCustomerLogin(scanner);
                 case "3" -> handleAdminLogin(scanner);
-                case "4" -> {
-                    SessionContext.setCurrentCustomer(DefaultCustomers.GUEST);
-                    SessionContext.resetCart();
-                    ConsoleHelper.printSuccess("You have been logged out.");
-                }
-
                 case "x" -> {
                     ConsoleHelper.printSuccess("Thanks for visiting!");
                     exit = true;
@@ -48,8 +42,8 @@ public class MainController {
         }
     }
 
-    private void handleCustomerLogin(Scanner scanner) throws SQLException {
-        ConsoleHelper.printHeader("Customer Login");
+    private void handleCustomerLogin(Scanner scanner) {
+        ConsoleHelper.printHeader("👥 Customer Login");
 
         ConsoleHelper.prompt("Email: ");
         String email = scanner.nextLine();
@@ -57,19 +51,26 @@ public class MainController {
         ConsoleHelper.prompt("Password: ");
         String password = scanner.nextLine();
 
-        if (LoginContext.loginAsCustomer(email, password)) {
-            Customer customer = LoginContext.getLoggedInUser();
-            SessionContext.setCurrentCustomer(customer); // if still keeping SessionContext
-            ConsoleHelper.printSuccess("Logged in as " + customer.getName());
-            new CustomerController().runMenu();
-        } else {
-            ConsoleHelper.printError("Invalid email or password.");
+        try {
+            if (LoginContext.loginAsCustomer(email, password)) {
+                Customer customer = LoginContext.getLoggedInUser();
+                SessionContext.setCurrentUser(customer); // <-- updated to match new context logic
+                ConsoleHelper.printSuccess("Logged in as " + customer.getName());
+                new CustomerShopController().runCustomerShopMenu();
+            } else {
+                ConsoleHelper.printError("Invalid email or password.");
+            }
+        } catch (IllegalArgumentException e) {
+            ConsoleHelper.printError(e.getMessage());
+        } catch (SQLException e) {
+            ConsoleHelper.printError("Login failed due to a system error.");
         }
+
+        ConsoleHelper.printDivider();
     }
 
-
     private void handleAdminLogin(Scanner scanner) {
-        ConsoleHelper.printHeader("Admin Login");
+        ConsoleHelper.printHeader("🛡️ Admin Login");
 
         ConsoleHelper.prompt("Username: ");
         String username = scanner.nextLine();
@@ -80,9 +81,10 @@ public class MainController {
         AdminService adminService = new AdminService();
 
         try {
-            boolean isValid = adminService.login(username, password);
+            Admin admin = adminService.getAdminIfValid(username, password);
 
-            if (isValid) {
+            if (admin != null) {
+                SessionContext.setCurrentUser(admin); // ✅ Store in session
                 ConsoleHelper.printSuccess("Welcome, Admin!");
                 new AdminController().runPreMenu();
             } else {
@@ -92,5 +94,7 @@ public class MainController {
         } catch (SQLException e) {
             ConsoleHelper.printError("Login failed due to a system error.");
         }
+
+        ConsoleHelper.printDivider();
     }
 }

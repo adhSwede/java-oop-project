@@ -1,10 +1,12 @@
 package repositories;
 
 import entities.Product;
+import utils.Mappers;
 import utils.SqlUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static utils.Mappers.productMapper;
 
@@ -14,8 +16,27 @@ public class ProductRepository {
 
     public ArrayList<Product> getAll() throws SQLException {
         String query = "SELECT * FROM products";
-        return SqlUtils.executeAndMap(query, productMapper);
+        ArrayList<Product> products = SqlUtils.executeAndMap(query, productMapper);
+        addCategoriesToProducts(products);
+        return products;
     }
+
+
+    private void addCategoriesToProducts (List<Product> products) throws SQLException {
+        for (Product product : products) {
+            int productId = product.getProductId();
+            String query = """
+            SELECT c.* FROM categories c
+            JOIN products_categories pc ON c.category_id = pc.category_id
+            WHERE pc.product_id = ?
+        """;
+
+            var categories = SqlUtils.executeAndMap(query, Mappers.categoryMapper, String.valueOf(productId));
+
+            product.setCategories(categories);
+        }
+    }
+
 
     public Product getById(int id) throws SQLException {
         String query = "SELECT * FROM products WHERE product_id = ?";

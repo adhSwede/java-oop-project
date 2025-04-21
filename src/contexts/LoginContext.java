@@ -23,6 +23,7 @@ public class LoginContext {
     // Log out the user
     public static void logout() {
         loggedInCustomer = null;
+        SessionContext.clear();
     }
 
     // Check if a user is logged in

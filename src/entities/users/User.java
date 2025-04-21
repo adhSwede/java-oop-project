@@ -5,16 +5,14 @@ public abstract class User {
     protected String email;
     protected String password;
 
-
-
-    // Abstract base class for different types of users in the system.
-    // Demo: inheritance and polymorphism, OOP.
+    // #################### [ Constructor ] ####################
     public User(int userId, String email, String password) {
         this.userId = userId;
         this.email = email;
         this.password = password;
     }
 
+    // #################### [ Getters ] ####################
     public int getUserId() {
         return userId;
     }
@@ -27,5 +25,6 @@ public abstract class User {
         return password;
     }
 
+    // #################### [ Abstract Method ] ####################
     public abstract String getUserInfo();
 }

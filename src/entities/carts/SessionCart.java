@@ -9,6 +9,7 @@ import java.sql.SQLException;
 public class SessionCart extends Cart {
     private final ProductService productService = new ProductService();
 
+    // #################### [ Add / Remove / Update by ID ] ####################
     public void addProductToCart(int productId, int quantity) {
         try {
             Product product = productService.getProductById(productId);

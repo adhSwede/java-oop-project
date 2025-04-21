@@ -1,33 +1,38 @@
 package services;
 
+import entities.Product;
 import entities.carts.SessionCart;
+import contexts.SessionContext;
 
 import java.util.Map;
 
 public class SessionCartService {
-    private final SessionCart sessionCart = new SessionCart();
+
+    private SessionCart getCart() {
+        return SessionContext.getSessionCart();
+    }
 
     public void addProductToCart(int productId, int quantity) {
-        sessionCart.addProductToCart(productId, quantity);
+        getCart().addProductToCart(productId, quantity);
     }
 
     public void removeProductFromCart(int productId) {
-        sessionCart.removeProductFromCart(productId);
+        getCart().removeProductFromCart(productId);
     }
 
     public void updateProductQuantity(int productId, int quantity) {
-        sessionCart.updateProductQuantity(productId, quantity);
+        getCart().updateProductQuantity(productId, quantity);
     }
 
-    public Map<Integer, Integer> getProductList() {
-        return sessionCart.getItems();
+    public Map<Product, Integer> getProductList() {
+        return getCart().getItems();
     }
 
     public void clearCart() {
-        sessionCart.clearCart();
+        getCart().clearCart();
     }
 
-    public double calculateTotalPrice() {
-        return sessionCart.getTotalPrice();
+    public double getTotalPrice() {
+        return getCart().getTotalPrice();
     }
 }

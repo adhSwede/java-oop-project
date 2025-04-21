@@ -97,6 +97,14 @@ public class StoredCartService {
         }
     }
 
+    public void deleteCart(int cartId) throws CartException {
+        try {
+            storedCartRepository.deleteCart(cartId);
+        } catch (SQLException e) {
+            throw new CartException("Failed to delete cart: " + e.getMessage());
+        }
+    }
+
     // #################### [ Cart → Order Conversion ] ####################
     public void convertCartToOrder(int cartId) {
         try {

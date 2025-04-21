@@ -29,19 +29,19 @@ public class OrderController {
         String select;
 
         do {
-            ConsoleHelper.clearConsole();
-            System.out.println("\n--- Order Menu ---");
-            System.out.println("1. Place new order");
-            System.out.println("2. View customer order history");
-            System.out.println("B. Back to main menu");
+            ConsoleHelper.printHeader("📦 Order Menu");
+            ConsoleHelper.printOption("1", "Place new order");
+            ConsoleHelper.printOption("2", "View customer order history");
+            ConsoleHelper.printOption("B", "Back to previous menu");
+            ConsoleHelper.prompt("Select an option: ");
 
             select = sc.nextLine().trim().toLowerCase();
 
             switch (select) {
                 case "1" -> placeOrder();
                 case "2" -> viewCustomerOrderHistory();
-                case "b" -> System.out.println("Returning to main menu...");
-                default -> System.out.println("Invalid option. Please try again.");
+                case "b" -> ConsoleHelper.printSuccess("Returning to main menu...");
+                default -> ConsoleHelper.printWarning("Invalid option. Please try again.");
             }
 
         } while (!select.equals("b"));
@@ -54,7 +54,6 @@ public class OrderController {
             ConsoleHelper.printWarning("You must be logged in to do this.");
             return;
         }
-
 
         try {
             int customerId = SessionContext.getCurrentCustomer().getUserId();
@@ -77,13 +76,15 @@ public class OrderController {
             orderItems.add(item);
 
             int orderId = orderService.placeOrder(customerId, orderItems);
-            System.out.println("✅ Order placed successfully. Order ID: " + orderId);
+            ConsoleHelper.printSuccess("✅ Order placed successfully. Order ID: " + orderId);
 
         } catch (IllegalArgumentException e) {
             ExceptionHandler.handleUserError(e, "placing the order");
         } catch (SQLException e) {
             ExceptionHandler.handleSQLException(e, "placing the order");
         }
+
+        ConsoleHelper.printDivider();
     }
 
     public void viewCustomerOrderHistory() throws SQLException {
@@ -91,9 +92,16 @@ public class OrderController {
             ConsoleHelper.printWarning("You must be logged in to view your order history.");
             return;
         }
+
         int customerId = SessionContext.getCurrentCustomer().getUserId();
         List<OrderSummary> summaries = orderService.getSummariesByCustomerId(customerId);
-        ConsoleHelper.printList(summaries);
-    }
 
+        ConsoleHelper.printHeader("📋 Your Orders");
+        if (summaries.isEmpty()) {
+            ConsoleHelper.printWarning("No orders found.");
+        } else {
+            ConsoleHelper.printList(summaries);
+        }
+        ConsoleHelper.printDivider();
+    }
 }

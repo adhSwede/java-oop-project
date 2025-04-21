@@ -45,23 +45,28 @@ public class SessionCartController {
     }
 
     private void viewCart() {
-        Map<Integer, Integer> items = cartService.getProductList();
+        Map<Product, Integer> items = cartService.getProductList();
+
         if (items.isEmpty()) {
-            System.out.println("Your cart is empty.");
+            ConsoleHelper.printWarning("🛒 Your cart is empty.");
             return;
         }
 
-        System.out.println("Your cart:");
-        items.forEach((productId, qty) -> {
-            try {
-                Product p = productService.getProductById(productId);
-                System.out.printf("%s x%d = %.2f%n", p.getName(), qty, p.getPrice() * qty);
-            } catch (SQLException e) {
-                System.out.println("Failed to retrieve product: ID " + productId);
-            }
-        });
+        ConsoleHelper.printHeader("🛒 Your Cart");
 
-        System.out.printf("Total: %.2f%n", cartService.calculateTotalPrice());
+        double total = 0;
+
+        for (Map.Entry<Product, Integer> entry : items.entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+            double subtotal = product.getPrice() * quantity;
+            total += subtotal;
+
+            System.out.printf("• %s x%d — %.2f kr%n", product.getName(), quantity, subtotal);
+            ConsoleHelper.printDivider();
+        }
+
+        System.out.printf("💰 Total: %.2f kr%n", total);
     }
 
     private void addProduct() {

@@ -51,7 +51,8 @@ public class Mappers {
             resultSet.getInt("order_id"),
             resultSet.getInt("customer_id"),
             resultSet.getString("customer_name"),
-            LocalDate.parse(resultSet.getString("order_date").split(" ")[0])
+            LocalDate.parse(resultSet.getString("order_date").split(" ")[0]),
+            resultSet.getDouble("total")
     );
 
     public static final RowMapper<Admin> adminMapper = resultSet -> new Admin(
@@ -65,5 +66,13 @@ public class Mappers {
             rs.getInt("customer_id"),
             rs.getString("name"),
             rs.getBoolean("is_active")
+    );
+
+    public static final RowMapper<Review> reviewMapper = rs -> new Review(
+            rs.getInt("review_id"),
+            rs.getInt("product_id"),
+            rs.getInt("customer_id"),
+            rs.getInt("rating"),
+            rs.getString("comment")
     );
 }

@@ -1,11 +1,10 @@
 package factories;
-
 import repositories.*;
 
- // Lazy-loaded factory for providing singleton instances of repositories.
- // Demo: Factory and Singleton design patterns.
 public class RepositoryFactory {
 
+     // Lazy-loaded factory for providing singleton instances of repositories.
+     // Demo: Factory and Singleton design patterns.
     private static CustomerRepository customerRepository;
     private static ProductRepository productRepository;
     private static OrderRepository orderRepository;
@@ -13,6 +12,8 @@ public class RepositoryFactory {
     private static CategoryRepository categoryRepository;
     private static AdminRepository adminRepository;
     private static StoredCartRepository storedCartRepository;
+    private static ReviewRepository reviewRepository;
+    private static ManufacturerRepository manufacturerRepository;
 
     public static CustomerRepository getCustomerRepository() {
         if (customerRepository == null) {
@@ -61,5 +62,19 @@ public class RepositoryFactory {
             storedCartRepository = new StoredCartRepository();
         }
         return storedCartRepository;
+    }
+
+    public static ReviewRepository getReviewRepository() {
+        if (reviewRepository == null) {
+            reviewRepository = new ReviewRepository();
+        }
+        return reviewRepository;
+    }
+
+    public static ManufacturerRepository getManufacturerRepository() {
+        if (manufacturerRepository == null) {
+            manufacturerRepository = new ManufacturerRepository();
+        }
+        return manufacturerRepository;
     }
 }

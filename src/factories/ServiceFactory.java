@@ -10,6 +10,8 @@ public class ServiceFactory {
     private static final ProductService productService = new ProductService();
     private static final SessionCartService sessionCartService = new SessionCartService();
     private static final StoredCartService storedCartService = new StoredCartService();
+    private static final ReviewService reviewService = new ReviewService();
+    private static final ManufacturerService manufacturerService = new ManufacturerService();
 
     public static AdminService getAdminService() {
         return adminService;
@@ -38,4 +40,8 @@ public class ServiceFactory {
     public static StoredCartService getStoredCartService() {
         return storedCartService;
     }
+
+    public static ReviewService getReviewService() { return reviewService; }
+
+    public static ManufacturerService getManufacturerService() { return manufacturerService; }
 }

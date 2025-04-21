@@ -20,14 +20,14 @@ public class CustomerController {
         String select;
 
         do {
-            ConsoleHelper.clearConsole();
-            System.out.println("\n--- Customer Menu ---");
-            System.out.println("1. Get all customers");
-            System.out.println("2. Get one customer by ID");
-            System.out.println("3. Add new customer");
-            System.out.println("4. Update customer email");
-            System.out.println("B. Back to main menu");
-            System.out.print("Select an option: ");
+            ConsoleHelper.printHeader("👤 Customer Menu");
+            ConsoleHelper.printOption("1", "Get all customers");
+            ConsoleHelper.printOption("2", "Get one customer by ID");
+            ConsoleHelper.printOption("3", "Add new customer");
+            ConsoleHelper.printOption("4", "Update customer email");
+            ConsoleHelper.printOption("B", "Back to previous menu");
+            ConsoleHelper.prompt("Select an option: ");
+
             select = sc.nextLine().trim().toLowerCase();
 
             switch (select) {
@@ -35,8 +35,8 @@ public class CustomerController {
                 case "2" -> getCustomerById();
                 case "3" -> addNewCustomer();
                 case "4" -> updateCustomerEmail();
-                case "b" -> System.out.println("Returning to main menu...");
-                default -> System.out.println("Invalid option. Please try again.");
+                case "b" -> ConsoleHelper.printSuccess("Returning to main menu...");
+                default -> ConsoleHelper.printWarning("Invalid option. Please try again.");
             }
 
         } while (!select.equals("b"));
@@ -44,27 +44,37 @@ public class CustomerController {
 
     private void getAllCustomers() {
         ArrayList<Customer> customers = customerService.getAllCustomers();
-        for (Customer customer : customers) {
-            System.out.println(customer);
+        ConsoleHelper.printDivider();
+        if (customers.isEmpty()) {
+            ConsoleHelper.printWarning("No customers found.");
+        } else {
+            customers.forEach(System.out::println);
         }
     }
 
     private void getCustomerById() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter customer ID: ");
+        ConsoleHelper.prompt("Enter customer ID: ");
         String input = sc.nextLine();
 
+        ConsoleHelper.printDivider();
         if (ValidationUtils.isValidInteger(input)) {
             int id = Integer.parseInt(input);
-            System.out.println(customerService.getCustomer(id));
+            Customer customer = customerService.getCustomer(id);
+            if (customer != null) {
+                System.out.println(customer);
+            } else {
+                ConsoleHelper.printWarning("Customer not found.");
+            }
         } else {
-            System.out.println("Invalid input. Please enter a valid number.");
+            ConsoleHelper.printWarning("Invalid input. Please enter a valid number.");
         }
     }
 
     private void addNewCustomer() {
         Scanner sc = new Scanner(System.in);
 
+        ConsoleHelper.printDivider();
         String name = InputUtils.promptUntilValid(
                 sc,
                 "Enter customer name: ",
@@ -102,18 +112,19 @@ public class CustomerController {
 
         Customer newCustomer = new Customer(name, email, phone, address, password);
         customerService.addCustomer(newCustomer);
-        System.out.println("Customer added successfully.");
+        ConsoleHelper.printSuccess("Customer added successfully.");
     }
 
     private void updateCustomerEmail() {
         Scanner sc = new Scanner(System.in);
 
+        ConsoleHelper.printDivider();
         if (SessionContext.isGuest()) {
             ConsoleHelper.printWarning("You must be logged in to update your email.");
             return;
         }
-        int customerId = SessionContext.getCurrentCustomer().getUserId();
 
+        int customerId = SessionContext.getCurrentCustomer().getUserId();
 
         String newEmail = InputUtils.promptUntilValid(
                 sc,
@@ -123,6 +134,6 @@ public class CustomerController {
         );
 
         customerService.updateCustomerEmail(customerId, newEmail);
-        System.out.println("Customer updated successfully.");
+        ConsoleHelper.printSuccess("Customer updated successfully.");
     }
 }

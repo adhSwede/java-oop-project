@@ -3,14 +3,14 @@ package entities;
 import java.time.LocalDate;
 
 public class Order {
+
     private int orderId;
     private int customerId;
     private LocalDate orderDate;
 
+    // #################### [ Constructors ] ####################
     public Order() {
-        this.orderId = orderId;
-        this.customerId = customerId;
-        this.orderDate = orderDate;
+        // Empty constructor for frameworks or manual population
     }
 
     public Order(int customerId, LocalDate orderDate) {
@@ -19,8 +19,12 @@ public class Order {
     }
 
     public Order(int orderId, int customerId, LocalDate orderDate) {
+        this.orderId = orderId;
+        this.customerId = customerId;
+        this.orderDate = orderDate;
     }
 
+    // #################### [ Getters & Setters ] ####################
     public int getOrderId() {
         return orderId;
     }
@@ -45,8 +49,11 @@ public class Order {
         this.orderDate = orderDate;
     }
 
+    // #################### [ ToString ] ####################
     @Override
     public String toString() {
-        return "Order ID: " + orderId + ", Customer ID: " + customerId + ", Date: " + orderDate;
+        return "Order ID: " + orderId +
+                ", Customer ID: " + customerId +
+                ", Date: " + orderDate;
     }
 }

@@ -6,6 +6,7 @@ public class StoredCart extends Cart {
     private String name;
     private boolean isActive;
 
+    // #################### [ Constructor ] ####################
     public StoredCart(int cartId, int customerId, String name, boolean isActive) {
         this.cartId = cartId;
         this.customerId = customerId;
@@ -13,6 +14,7 @@ public class StoredCart extends Cart {
         this.isActive = isActive;
     }
 
+    // #################### [ Getters & Setters ] ####################
     public int getCartId() {
         return cartId;
     }

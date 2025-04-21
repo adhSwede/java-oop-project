@@ -1,9 +1,11 @@
 package entities;
 
 public class Category {
+
     private int id;
     private String name;
 
+    // #################### [ Constructors ] ####################
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
@@ -13,6 +15,7 @@ public class Category {
         this.name = name;
     }
 
+    // #################### [ Getters ] ####################
     public int getId() {
         return id;
     }
@@ -21,6 +24,7 @@ public class Category {
         return name;
     }
 
+    // #################### [ ToString ] ####################
     @Override
     public String toString() {
         return "Category ID: " + id + ", Name: " + name;

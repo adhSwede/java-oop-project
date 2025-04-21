@@ -1,28 +1,25 @@
 package utils;
 
 import static constants.Colors.*;
+
 import java.util.List;
 
 public class ConsoleHelper {
 
-    public static <T> void printList(List<T> items) {
-        if (items.isEmpty()) {
-            System.out.println(YELLOW + "No matching items found." + RESET);
-        } else {
-            for (T item : items) {
-                System.out.println(item);
-            }
-        }
-    }
+    // ==================== [ General Console Tools ] ====================
 
     public static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    public static void prompt(String message) {
+        System.out.print(BLUE + "👉 " + message + RESET);
+    }
+
     public static void printHeader(String title) {
         clearConsole();
-        String bar = "=".repeat(title.length() + 8);
+        final String bar = "=".repeat(title.length() + 8);
         System.out.println("\n" + CYAN + bar);
         System.out.println("==  " + BOLD + title + RESET + CYAN + "  ==");
         System.out.println(bar + RESET + "\n");
@@ -36,6 +33,12 @@ public class ConsoleHelper {
         System.out.printf(" [%s%s%s] %s%n", BOLD, key.toUpperCase(), RESET, description);
     }
 
+    public static void printTitle(String message) {
+        System.out.println(BOLD + UNDERLINE + message + RESET);
+    }
+
+    // ==================== [ Feedback ] ====================
+
     public static void printSuccess(String msg) {
         System.out.println(GREEN + "✅ " + msg + RESET);
     }
@@ -48,11 +51,21 @@ public class ConsoleHelper {
         System.out.println(YELLOW + "⚠️  " + msg + RESET);
     }
 
-    public static void prompt(String message) {
-        System.out.print(BLUE + "👉 " + message + RESET);
+    // ==================== [ List Helpers ] ====================
+
+    public static <T> void printList(List<T> items) {
+        if (items.isEmpty()) {
+            System.out.println(YELLOW + "No matching items found." + RESET);
+        } else {
+            for (T item : items) {
+                System.out.println(item);
+            }
+        }
     }
 
-    public static void printTitle(String message) {
-        System.out.println(BOLD + UNDERLINE + message + RESET);
+    // ==================== [ Star Rating Renderer ] ====================
+    public static String renderStars(int rating) {
+        final int total = 5;
+        return "⭐".repeat(rating) + "☆".repeat(total - rating);
     }
 }

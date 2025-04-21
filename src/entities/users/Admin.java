@@ -1,19 +1,20 @@
 package entities.users;
 
-// Admin and Customer both extend User abstract superclass
 public class Admin extends User {
     private String username;
 
+    // #################### [ Constructors ] ####################
     public Admin(int adminId, String username, String password) {
         super(adminId, "admin@" + username + ".com", password); // placeholder email
         this.username = username;
     }
 
     public Admin(String username, String password) {
-        super(-1, "admin@" + username + ".com", password); // placeholder id & email
+        super(-1, "admin@" + username + ".com", password); // placeholder ID & email
         this.username = username;
     }
 
+    // #################### [ Getters & Setters ] ####################
     public String getUsername() {
         return username;
     }
@@ -22,7 +23,7 @@ public class Admin extends User {
         this.username = username;
     }
 
-    // Polymorph overrides from User superclass
+    // #################### [ Overrides ] ####################
     @Override
     public String getUserInfo() {
         return "Admin: " + username + " (ID: " + getUserId() + ")";

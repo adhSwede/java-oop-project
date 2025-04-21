@@ -15,13 +15,9 @@ public class AdminService {
         return adminRepository.getAll();
     }
 
-    public Admin getAdmin(String username) throws SQLException {
-       return adminRepository.getByUsername(username);
-    }
-
     // #################### [ Auth ] ####################
-    public boolean login(String username, String password) throws SQLException {
+    public Admin getAdminIfValid(String username, String password) throws SQLException {
         Admin admin = adminRepository.getByUsername(username);
-        return admin != null && admin.getPassword().equals(password);
+        return (admin != null && admin.getPassword().equals(password)) ? admin : null;
     }
 }

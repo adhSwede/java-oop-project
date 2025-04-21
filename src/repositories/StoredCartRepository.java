@@ -35,6 +35,11 @@ public class StoredCartRepository {
         SqlUtils.executeUpdate(query, newName, cartId);
     }
 
+    public void deleteCart(int cartId) throws SQLException {
+        String query = "DELETE FROM carts WHERE cart_id = ?";
+        SqlUtils.executeUpdate(query, cartId);
+    }
+
     // #################### [ Cart State Management ] ####################
 
     public void setActiveCart(int customerId, int cartId) throws SQLException {

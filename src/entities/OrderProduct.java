@@ -7,6 +7,7 @@ public class OrderProduct {
     private int quantity;
     private double unitPrice;
 
+    // #################### [ Constructors ] ####################
     public OrderProduct(int orderProductId, int orderId, int productId, int quantity, double unitPrice) {
         this.orderProductId = orderProductId;
         this.orderId = orderId;
@@ -26,6 +27,15 @@ public class OrderProduct {
         this.productId = productId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
+    }
+
+    // #################### [ Getters & Setters ] ####################
+    public int getOrderProductId() {
+        return orderProductId;
+    }
+
+    public void setOrderProductId(int orderProductId) {
+        this.orderProductId = orderProductId;
     }
 
     public int getOrderId() {
@@ -60,6 +70,7 @@ public class OrderProduct {
         this.unitPrice = unitPrice;
     }
 
+    // #################### [ ToString ] ####################
     @Override
     public String toString() {
         return "OrderID: " + orderId + ", ProductID: " + productId +
