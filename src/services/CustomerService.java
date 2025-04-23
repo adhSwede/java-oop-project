@@ -8,6 +8,7 @@ import utils.ValidationUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerService {
     private final CustomerRepository customerRepository = RepositoryFactory.getCustomerRepository();
@@ -34,16 +35,24 @@ public class CustomerService {
     }
 
     // #################### [ Insert ] ####################
-    public void addCustomer(Customer customer) {
+    public boolean addCustomer(Customer customer) {
         if (!ValidationUtils.isValidEmail(customer.getEmail())) {
             System.out.println("Invalid email format. Please try again.");
-            return;
+            return false;
+        }
+
+        List<String> issues = ValidationUtils.getPasswordErrors(customer.getPassword());
+        if (!issues.isEmpty()) {
+            issues.forEach(System.out::println);
+            return false;
         }
 
         try {
             customerRepository.addCustomer(customer);
+            return true;
         } catch (SQLException e) {
             System.out.println("Error while adding customer: " + e.getMessage());
+            return false;
         }
     }
 

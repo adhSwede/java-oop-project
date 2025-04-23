@@ -10,6 +10,7 @@ import utils.ValidationUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CustomerController {
@@ -106,16 +107,27 @@ public class CustomerController {
 
         String password = InputUtils.promptUntilValid(sc,
                 "Enter customer password: ",
-                input -> !input.isBlank(),
-                "Password cannot be empty.");
+                input -> {
+                    List<String> errors = ValidationUtils.getPasswordErrors(input);
+                    if (!errors.isEmpty()) {
+                        errors.forEach(System.out::println);
+                        return false;
+                    }
+                    return true;
+                },
+                "Password is invalid. Please try again.");
 
         Customer newCustomer = new Customer(name,
                 email,
                 phone,
                 address,
                 password);
-        customerService.addCustomer(newCustomer);
-        ConsoleHelper.printSuccess("Customer added successfully.");
+
+        if (customerService.addCustomer(newCustomer)) {
+            ConsoleHelper.printSuccess("✅ Customer added successfully.");
+        } else {
+            ConsoleHelper.printWarning("❌ Customer could not be added.");
+        }
     }
 
     private void updateCustomerEmail() {
