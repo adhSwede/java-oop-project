@@ -2,7 +2,9 @@ package renderers;
 
 import entities.Review;
 import utils.ConsoleHelper;
-import static constants.Colors.*;
+
+import static constants.Colors.BOLD;
+import static constants.Colors.RESET;
 
 public class ReviewRenderer {
 

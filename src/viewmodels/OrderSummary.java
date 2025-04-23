@@ -1,15 +1,19 @@
 package viewmodels;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class OrderSummary {
-    private int orderId;
-    private int customerId;
-    private String customerName;
-    private LocalDate orderDate;
-    private double total;
+    private final int orderId;
+    private final int customerId;
+    private final String customerName;
+    private final LocalDateTime orderDate;
+    private final double total;
 
-    public OrderSummary(int orderId, int customerId, String customerName, LocalDate orderDate, double total) {
+    public OrderSummary(int orderId,
+                        int customerId,
+                        String customerName,
+                        LocalDateTime orderDate,
+                        double total) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.customerName = customerName;
@@ -29,7 +33,7 @@ public class OrderSummary {
         return customerName;
     }
 
-    public LocalDate getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
@@ -40,8 +44,7 @@ public class OrderSummary {
     @Override
     public String toString() {
         return "Order ID: " + orderId +
-                ", Customer: " + customerName +
-                " (ID: " + customerId + ")" +
+                ", Customer: " + customerName + " (ID: " + customerId + ")" +
                 ", Date: " + orderDate +
                 ", Total: $" + String.format("%.2f", total);
     }

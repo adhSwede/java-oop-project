@@ -13,27 +13,33 @@ public class OrderProductRepository {
     public void addOrderProduct(OrderProduct orderProduct) throws SQLException {
         String query = "INSERT INTO orders_products (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)";
 
-        SqlUtils.executeUpdate(
-                query,
+        SqlUtils.executeUpdate(query,
                 orderProduct.getOrderId(),
                 orderProduct.getProductId(),
                 orderProduct.getQuantity(),
-                orderProduct.getUnitPrice()
-        );
+                orderProduct.getUnitPrice());
     }
 
     @SuppressWarnings("SqlResolve")
     public void addBatch(List<OrderProduct> orderProducts) throws SQLException {
+        if (orderProducts == null || orderProducts.isEmpty()) {
+            return;
+        }
+
         String query = "INSERT INTO orders_products (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = SqlUtils.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             for (OrderProduct op : orderProducts) {
-                stmt.setInt(1, op.getOrderId());
-                stmt.setInt(2, op.getProductId());
-                stmt.setInt(3, op.getQuantity());
-                stmt.setDouble(4, op.getUnitPrice());
+                stmt.setInt(1,
+                        op.getOrderId());
+                stmt.setInt(2,
+                        op.getProductId());
+                stmt.setInt(3,
+                        op.getQuantity());
+                stmt.setDouble(4,
+                        op.getUnitPrice());
                 stmt.addBatch();
             }
 

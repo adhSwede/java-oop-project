@@ -5,11 +5,13 @@ import entities.users.Customer;
 import utils.ConsoleHelper;
 import viewmodels.OrderSummary;
 
-import static constants.Colors.*;
+import static constants.Colors.BOLD;
+import static constants.Colors.RESET;
 
 public class OrderRenderer {
 
-    public static void printOrderSummary(Order o, Customer c) {
+    public static void printOrderSummary(Order o,
+                                         Customer c) {
         System.out.println(BOLD + "📦 Order ID: " + o.getOrderId() + RESET);
         System.out.println("👤 Customer: " + c.getName() + " (ID: " + c.getUserId() + ")");
         System.out.println("📅 Date: " + o.getOrderDate());
@@ -20,7 +22,8 @@ public class OrderRenderer {
         System.out.println(BOLD + "📦 Order ID: " + summary.getOrderId() + RESET);
         System.out.println("👤 Customer: " + summary.getCustomerName() + " (ID: " + summary.getCustomerId() + ")");
         System.out.println("📅 Date: " + summary.getOrderDate());
-        System.out.println("💰 Total: $" + String.format("%.2f", summary.getTotal()));
+        System.out.println("💰 Total: $" + String.format("%.2f",
+                summary.getTotal()));
         ConsoleHelper.printDivider();
     }
 }

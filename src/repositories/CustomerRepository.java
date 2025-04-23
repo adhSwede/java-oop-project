@@ -3,7 +3,10 @@ package repositories;
 import entities.users.Customer;
 import utils.SqlUtils;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,18 +18,23 @@ public class CustomerRepository {
 
     public ArrayList<Customer> getAll() throws SQLException {
         String query = "SELECT * FROM customers";
-        return SqlUtils.executeAndMap(query, customerMapper);
+        return SqlUtils.executeAndMap(query,
+                customerMapper);
     }
 
     public Customer getById(int id) throws SQLException {
         String query = "SELECT * FROM customers WHERE customer_id = ?";
-        ArrayList<Customer> customers = SqlUtils.executeAndMap(query, customerMapper, String.valueOf(id));
+        ArrayList<Customer> customers = SqlUtils.executeAndMap(query,
+                customerMapper,
+                String.valueOf(id));
         return customers.isEmpty() ? null : customers.getFirst();
     }
 
     public Customer getByEmail(String email) throws SQLException {
         String query = "SELECT * FROM customers WHERE email = ?";
-        List<Customer> customers = SqlUtils.executeAndMap(query, customerMapper, email);
+        List<Customer> customers = SqlUtils.executeAndMap(query,
+                customerMapper,
+                email);
         return customers.isEmpty() ? null : customers.get(0);
     }
 
@@ -35,7 +43,8 @@ public class CustomerRepository {
         try (Connection conn = SqlUtils.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, customerId);
+            stmt.setInt(1,
+                    customerId);
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next();
             }
@@ -51,14 +60,16 @@ public class CustomerRepository {
                 customer.getEmail(),
                 customer.getPhone(),
                 customer.getAddress(),
-                customer.getPassword()
-        );
+                customer.getPassword());
     }
 
     // #################### [ Update ] ####################
 
-    public void updateCustomerEmail(int customerId, String email) throws SQLException {
+    public void updateCustomerEmail(int customerId,
+                                    String email) throws SQLException {
         String query = "UPDATE customers SET email = ? WHERE customer_id = ?";
-        SqlUtils.executeUpdate(query, email, String.valueOf(customerId));
+        SqlUtils.executeUpdate(query,
+                email,
+                String.valueOf(customerId));
     }
 }

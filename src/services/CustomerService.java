@@ -1,10 +1,10 @@
 package services;
 
+import entities.users.Customer;
 import entities.users.User;
 import factories.RepositoryFactory;
-import utils.ValidationUtils;
-import entities.users.Customer;
 import repositories.CustomerRepository;
+import utils.ValidationUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,23 +48,28 @@ public class CustomerService {
     }
 
     // #################### [ Update ] ####################
-    public void updateCustomerEmail(int customerId, String email) {
+    public void updateCustomerEmail(int customerId,
+                                    String email) {
         if (!ValidationUtils.isValidEmail(email)) {
             System.out.println("Invalid email format. Please try again.");
             return;
         }
         try {
-            customerRepository.updateCustomerEmail(customerId, email);
+            customerRepository.updateCustomerEmail(customerId,
+                    email);
         } catch (SQLException e) {
             System.out.println("Error while updating customer email: " + e.getMessage());
         }
     }
 
     // #################### [ Auth ] ####################
-    public User loginAsCustomer(String email, String password) throws SQLException {
+    public User loginAsCustomer(String email,
+                                String password) throws SQLException {
         Customer customer = customerRepository.getByEmail(email);
 
-        if (customer != null && customer.getPassword().equals(password)) {
+        if (customer != null && customer
+                .getPassword()
+                .equals(password)) {
             return customer;
         } else {
             throw new IllegalArgumentException("Invalid email or password.");

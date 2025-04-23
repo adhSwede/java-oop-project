@@ -6,7 +6,9 @@ public abstract class User {
     protected String password;
 
     // #################### [ Constructor ] ####################
-    public User(int userId, String email, String password) {
+    public User(int userId,
+                String email,
+                String password) {
         this.userId = userId;
         this.email = email;
         this.password = password;

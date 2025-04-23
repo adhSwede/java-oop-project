@@ -10,9 +10,11 @@ public class LoginContext {
     private static Customer loggedInCustomer;  // Singleton for current session
 
     // Log in the user
-    public static boolean loginAsCustomer(String email, String password) throws SQLException {
+    public static boolean loginAsCustomer(String email,
+                                          String password) throws SQLException {
         CustomerService customerService = new CustomerService();
-        User user = customerService.loginAsCustomer(email, password);
+        User user = customerService.loginAsCustomer(email,
+                password);
         if (user instanceof Customer customer) {
             loggedInCustomer = customer;
             return true;

@@ -36,16 +36,44 @@ public class ProductService {
         return productRepository.addProductAndReturnId(product);
     }
 
-    public void addProductToCategory(int productId, int categoryId) throws SQLException {
-        productRepository.addProductToCategory(productId, categoryId);
+    public void addProductToCategory(int productId,
+                                     int categoryId) throws SQLException {
+        productRepository.addProductToCategory(productId,
+                categoryId);
     }
 
     // #################### [ Update ] ####################
-    public void updatePrice(int id, double price) throws SQLException {
-        productRepository.updatePrice(id, price);
+    public void updatePrice(int id,
+                            double price) throws SQLException {
+        productRepository.updatePrice(id,
+                price);
     }
 
-    public void updateStock(int id, int quantity) throws SQLException {
-        productRepository.updateStockQuantity(id, quantity);
+    public void updateStock(int id,
+                            int quantity) throws SQLException {
+        productRepository.updateStockQuantity(id,
+                quantity);
+    }
+
+    public void increaseStock(int productId, int quantity) throws SQLException {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive to increase stock.");
+        }
+
+        int preUpdateStock = productRepository.getStockByProductId(productId);
+        updateStock(productId, preUpdateStock + quantity);
+    }
+
+    public void decreaseStock(int productId, int quantity) throws SQLException {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive to decrease stock.");
+        }
+
+        int preUpdateStock = productRepository.getStockByProductId(productId);
+        if (quantity > preUpdateStock) {
+            throw new IllegalArgumentException("Cannot decrease stock below zero.");
+        }
+
+        updateStock(productId, preUpdateStock - quantity);
     }
 }

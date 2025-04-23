@@ -1,11 +1,12 @@
 package controllers;
 
+import contexts.LoginContext;
+import contexts.SessionContext;
 import entities.users.Admin;
 import entities.users.Customer;
 import factories.ServiceFactory;
 import services.AdminService;
 import services.CustomerService;
-import contexts.*;
 import utils.ConsoleHelper;
 
 import java.sql.SQLException;
@@ -21,13 +22,20 @@ public class MainController {
         while (!exit) {
             ConsoleHelper.printHeader("🏠 Webshop Start Menu");
 
-            ConsoleHelper.printOption("1", "Browse as Customer");
-            ConsoleHelper.printOption("2", "Login as Customer");
-            ConsoleHelper.printOption("3", "Login as Admin");
-            ConsoleHelper.printOption("X", "Exit");
+            ConsoleHelper.printOption("1",
+                    "Browse as Customer");
+            ConsoleHelper.printOption("2",
+                    "Login as Customer");
+            ConsoleHelper.printOption("3",
+                    "Login as Admin");
+            ConsoleHelper.printOption("X",
+                    "Exit");
 
             ConsoleHelper.prompt("Choose an option: ");
-            String choice = scanner.nextLine().trim().toLowerCase();
+            String choice = scanner
+                    .nextLine()
+                    .trim()
+                    .toLowerCase();
 
             switch (choice) {
                 case "1" -> new CustomerShopController().runCustomerShopMenu();
@@ -52,7 +60,8 @@ public class MainController {
         String password = scanner.nextLine();
 
         try {
-            if (LoginContext.loginAsCustomer(email, password)) {
+            if (LoginContext.loginAsCustomer(email,
+                    password)) {
                 Customer customer = LoginContext.getLoggedInUser();
                 SessionContext.setCurrentUser(customer); // <-- updated to match new context logic
                 ConsoleHelper.printSuccess("Logged in as " + customer.getName());
@@ -81,7 +90,8 @@ public class MainController {
         AdminService adminService = new AdminService();
 
         try {
-            Admin admin = adminService.getAdminIfValid(username, password);
+            Admin admin = adminService.getAdminIfValid(username,
+                    password);
 
             if (admin != null) {
                 SessionContext.setCurrentUser(admin); // ✅ Store in session

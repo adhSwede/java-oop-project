@@ -15,7 +15,12 @@ public class Product {
     private List<Category> categories = new ArrayList<>();
 
     // #################### [ Constructors ] ####################
-    public Product(int productId, int manufacturerId, String name, String description, double price, int stockQuantity) {
+    public Product(int productId,
+                   int manufacturerId,
+                   String name,
+                   String description,
+                   double price,
+                   int stockQuantity) {
         this.productId = productId;
         this.manufacturerId = manufacturerId;
         this.name = name;
@@ -24,7 +29,11 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    public Product(int manufacturerId, String name, String description, double price, int stockQuantity) {
+    public Product(int manufacturerId,
+                   String name,
+                   String description,
+                   double price,
+                   int stockQuantity) {
         this.manufacturerId = manufacturerId;
         this.name = name;
         this.description = description;
@@ -94,15 +103,13 @@ public class Product {
     public String toString() {
         String manufacturerName;
         try {
-            manufacturerName = ServiceFactory.getManufacturerService().getManufacturerNameById(manufacturerId);
+            manufacturerName = ServiceFactory
+                    .getManufacturerService()
+                    .getManufacturerNameById(manufacturerId);
         } catch (Exception e) {
             manufacturerName = "Unknown";
         }
 
-        return "Product ID: " + productId +
-                ", Name: " + name +
-                ", Manufacturer: " + manufacturerName +
-                ", Price: $" + price +
-                ", In stock: " + stockQuantity;
+        return "Product ID: " + productId + ", Name: " + name + ", Manufacturer: " + manufacturerName + ", Price: $" + price + ", In stock: " + stockQuantity;
     }
 }

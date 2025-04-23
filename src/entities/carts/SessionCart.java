@@ -10,14 +10,17 @@ public class SessionCart extends Cart {
     private final ProductService productService = new ProductService();
 
     // #################### [ Add / Remove / Update by ID ] ####################
-    public void addProductToCart(int productId, int quantity) {
+    public void addProductToCart(int productId,
+                                 int quantity) {
         try {
             Product product = productService.getProductById(productId);
             if (product != null) {
-                addProduct(product, quantity);
+                addProduct(product,
+                        quantity);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "adding product to session cart");
+            ExceptionHandler.handleSQLException(e,
+                    "adding product to session cart");
         }
     }
 
@@ -28,18 +31,22 @@ public class SessionCart extends Cart {
                 removeProduct(product);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "removing product from session cart");
+            ExceptionHandler.handleSQLException(e,
+                    "removing product from session cart");
         }
     }
 
-    public void updateProductQuantity(int productId, int quantity) {
+    public void updateProductQuantity(int productId,
+                                      int quantity) {
         try {
             Product product = productService.getProductById(productId);
             if (product != null) {
-                updateQuantity(product, quantity);
+                updateQuantity(product,
+                        quantity);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "updating quantity in session cart");
+            ExceptionHandler.handleSQLException(e,
+                    "updating quantity in session cart");
         }
     }
 }

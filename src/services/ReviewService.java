@@ -14,20 +14,30 @@ public class ReviewService {
     private final OrderRepository orderRepository = RepositoryFactory.getOrderRepository();
 
     // #################### [ Create ] ####################
-    public Review addReview(int customerId, int productId, int rating, String comment) throws SQLException {
+    public Review addReview(int customerId,
+                            int productId,
+                            int rating,
+                            String comment) throws SQLException {
         comment = comment == null ? "" : comment;
 
         if (rating < 1 || rating > 5) {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
         }
 
-        if (!orderRepository.hasCustomerPurchased(customerId, productId))
+        if (!orderRepository.hasCustomerPurchased(customerId,
+                productId)) {
             throw new ReviewException("You must purchase the product first.");
+        }
 
-        if (reviewRepository.hasCustomerReviewed(customerId, productId))
+        if (reviewRepository.hasCustomerReviewed(customerId,
+                productId)) {
             throw new ReviewException("You already reviewed this product.");
+        }
 
-        return reviewRepository.addReview(customerId, productId, rating, comment);
+        return reviewRepository.addReview(customerId,
+                productId,
+                rating,
+                comment);
     }
 
     // #################### [ Read ] ####################
@@ -40,9 +50,11 @@ public class ReviewService {
     }
 
     // #################### [ Validation ] ####################
-    public boolean canReviewProduct(int customerId, int productId) throws SQLException {
-        return orderRepository.hasCustomerPurchased(customerId, productId)
-                && !reviewRepository.hasCustomerReviewed(customerId, productId);
+    public boolean canReviewProduct(int customerId,
+                                    int productId) throws SQLException {
+        return orderRepository.hasCustomerPurchased(customerId,
+                productId) && !reviewRepository.hasCustomerReviewed(customerId,
+                productId);
     }
 
 }

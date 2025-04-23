@@ -1,24 +1,28 @@
 package entities;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 
 public class Order {
 
     private int orderId;
     private int customerId;
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
 
     // #################### [ Constructors ] ####################
     public Order() {
-        // Empty constructor for frameworks or manual population
+        // Empty constructor for empty orders.
     }
 
-    public Order(int customerId, LocalDate orderDate) {
+    public Order(int customerId,
+                 LocalDateTime orderDate) {
         this.customerId = customerId;
         this.orderDate = orderDate;
     }
 
-    public Order(int orderId, int customerId, LocalDate orderDate) {
+    public Order(int orderId,
+                 int customerId,
+                 LocalDateTime orderDate) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.orderDate = orderDate;
@@ -41,19 +45,17 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public LocalDate getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
     // #################### [ ToString ] ####################
     @Override
     public String toString() {
-        return "Order ID: " + orderId +
-                ", Customer ID: " + customerId +
-                ", Date: " + orderDate;
+        return "Order ID: " + orderId + ", Customer ID: " + customerId + ", Date: " + orderDate;
     }
 }

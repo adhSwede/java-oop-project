@@ -8,7 +8,11 @@ public class OrderProduct {
     private double unitPrice;
 
     // #################### [ Constructors ] ####################
-    public OrderProduct(int orderProductId, int orderId, int productId, int quantity, double unitPrice) {
+    public OrderProduct(int orderProductId,
+                        int orderId,
+                        int productId,
+                        int quantity,
+                        double unitPrice) {
         this.orderProductId = orderProductId;
         this.orderId = orderId;
         this.productId = productId;
@@ -16,14 +20,19 @@ public class OrderProduct {
         this.unitPrice = unitPrice;
     }
 
-    public OrderProduct(int orderId, int productId, int quantity, double unitPrice) {
+    public OrderProduct(int orderId,
+                        int productId,
+                        int quantity,
+                        double unitPrice) {
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
 
-    public OrderProduct(int productId, int quantity, double unitPrice) {
+    public OrderProduct(int productId,
+                        int quantity,
+                        double unitPrice) {
         this.productId = productId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
@@ -73,7 +82,6 @@ public class OrderProduct {
     // #################### [ ToString ] ####################
     @Override
     public String toString() {
-        return "OrderID: " + orderId + ", ProductID: " + productId +
-                ", Quantity: " + quantity + ", Unit Price: " + unitPrice;
+        return "OrderID: " + orderId + ", ProductID: " + productId + ", Quantity: " + quantity + ", Unit Price: " + unitPrice;
     }
 }

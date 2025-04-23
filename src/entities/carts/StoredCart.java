@@ -1,13 +1,16 @@
 package entities.carts;
 
 public class StoredCart extends Cart {
+    private final int customerId;
     private int cartId;
-    private int customerId;
     private String name;
     private boolean isActive;
 
     // #################### [ Constructor ] ####################
-    public StoredCart(int cartId, int customerId, String name, boolean isActive) {
+    public StoredCart(int cartId,
+                      int customerId,
+                      String name,
+                      boolean isActive) {
         this.cartId = cartId;
         this.customerId = customerId;
         this.name = name;
@@ -31,12 +34,12 @@ public class StoredCart extends Cart {
         return name;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     public void setActive(boolean active) {

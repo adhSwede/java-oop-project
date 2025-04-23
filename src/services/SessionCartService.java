@@ -1,9 +1,11 @@
 package services;
 
+import contexts.SessionContext;
 import entities.Product;
 import entities.carts.SessionCart;
-import contexts.SessionContext;
+import factories.ServiceFactory;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 public class SessionCartService {
@@ -12,16 +14,10 @@ public class SessionCartService {
         return SessionContext.getSessionCart();
     }
 
-    public void addProductToCart(int productId, int quantity) {
-        getCart().addProductToCart(productId, quantity);
-    }
-
-    public void removeProductFromCart(int productId) {
-        getCart().removeProductFromCart(productId);
-    }
-
-    public void updateProductQuantity(int productId, int quantity) {
-        getCart().updateProductQuantity(productId, quantity);
+    public void addProductToCart(int productId,
+                                 int quantity) {
+        getCart().addProductToCart(productId,
+                quantity);
     }
 
     public Map<Product, Integer> getProductList() {
@@ -34,5 +30,25 @@ public class SessionCartService {
 
     public double getTotalPrice() {
         return getCart().getTotalPrice();
+    }
+
+    public int convertToOrder(int customerId) {
+        Map<Product, Integer> items = getCart().getItems();
+
+        if (items.isEmpty()) {
+            throw new IllegalArgumentException("Cart is empty");
+        }
+
+        try {
+            OrderService orderService = ServiceFactory.getOrderService();
+            int orderId = orderService.createOrderFromCart(customerId,
+                    items);
+
+            clearCart();
+            return orderId;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating order: " + e.getMessage(),
+                    e);
+        }
     }
 }

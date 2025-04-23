@@ -4,13 +4,20 @@ public class Admin extends User {
     private String username;
 
     // #################### [ Constructors ] ####################
-    public Admin(int adminId, String username, String password) {
-        super(adminId, "admin@" + username + ".com", password); // placeholder email
+    public Admin(int adminId,
+                 String username,
+                 String password) {
+        super(adminId,
+                "admin@" + username + ".com",
+                password); // placeholder email
         this.username = username;
     }
 
-    public Admin(String username, String password) {
-        super(-1, "admin@" + username + ".com", password); // placeholder ID & email
+    public Admin(String username,
+                 String password) {
+        super(-1,
+                "admin@" + username + ".com",
+                password); // placeholder ID & email
         this.username = username;
     }
 

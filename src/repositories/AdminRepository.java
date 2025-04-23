@@ -13,12 +13,15 @@ public class AdminRepository {
     public ArrayList<Admin> getAll() throws SQLException {
         String query = "SELECT * FROM admins";
 
-        return SqlUtils.executeAndMap(query, adminMapper);
+        return SqlUtils.executeAndMap(query,
+                adminMapper);
     }
 
     public Admin getByUsername(String username) throws SQLException {
         String query = "SELECT * FROM admins WHERE username = ?";
-        ArrayList<Admin> results = SqlUtils.executeAndMap(query, adminMapper, username);
+        ArrayList<Admin> results = SqlUtils.executeAndMap(query,
+                adminMapper,
+                username);
         return results.isEmpty() ? null : results.get(0);
     }
 

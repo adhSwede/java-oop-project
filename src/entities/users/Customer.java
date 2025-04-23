@@ -6,15 +6,28 @@ public class Customer extends User {
     private String address;
 
     // #################### [ Constructors ] ####################
-    public Customer(int customerId, String name, String email, String phone, String address, String password) {
-        super(customerId, email, password);
+    public Customer(int customerId,
+                    String name,
+                    String email,
+                    String phone,
+                    String address,
+                    String password) {
+        super(customerId,
+                email,
+                password);
         this.name = name;
         this.phone = phone;
         this.address = address;
     }
 
-    public Customer(String name, String email, String phone, String address, String password) {
-        super(-1, email, password); // placeholder
+    public Customer(String name,
+                    String email,
+                    String phone,
+                    String address,
+                    String password) {
+        super(-1,
+                email,
+                password); // placeholder
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -53,10 +66,7 @@ public class Customer extends User {
 
     @Override
     public String toString() {
-        return "Customer ID: " + getUserId() +
-                ", Name: " + name +
-                ", Email: " + getEmail() +
-                ", Phone: " + phone +
+        return "Customer ID: " + getUserId() + ", Name: " + name + ", Email: " + getEmail() + ", Phone: " + phone +
                 ", Address: " + address;
     }
 }

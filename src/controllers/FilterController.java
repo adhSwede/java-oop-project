@@ -2,12 +2,12 @@ package controllers;
 
 import entities.Product;
 import exceptions.FilterException;
+import factories.ServiceFactory;
 import filters.FilterValidator;
 import filters.ProductFilter;
-import factories.ServiceFactory;
+import renderers.ProductRenderer;
 import services.CategoryService;
 import services.ProductService;
-import renderers.ProductRenderer;
 import utils.ConsoleHelper;
 import utils.InputUtils;
 
@@ -26,12 +26,19 @@ public class FilterController {
 
         while (!back) {
             ConsoleHelper.printHeader("🔍 Filter Products");
-            ConsoleHelper.printOption("1", "Filter by category");
-            ConsoleHelper.printOption("2", "Filter by price range");
-            ConsoleHelper.printOption("3", "Filter by category + price");
-            ConsoleHelper.printOption("B", "Back");
+            ConsoleHelper.printOption("1",
+                    "Filter by category");
+            ConsoleHelper.printOption("2",
+                    "Filter by price range");
+            ConsoleHelper.printOption("3",
+                    "Filter by category + price");
+            ConsoleHelper.printOption("B",
+                    "Back");
             ConsoleHelper.prompt("Choose a filter option: ");
-            String choice = sc.nextLine().trim().toLowerCase();
+            String choice = sc
+                    .nextLine()
+                    .trim()
+                    .toLowerCase();
 
             switch (choice) {
                 case "1" -> filterByCategory();
@@ -45,14 +52,18 @@ public class FilterController {
 
     private void filterByCategory() {
         ConsoleHelper.prompt("Enter category name: ");
-        String category = sc.nextLine().trim();
+        String category = sc
+                .nextLine()
+                .trim();
 
         try {
             FilterValidator.validateCategoryName(category);
-            FilterValidator.validateCategoryExists(category, categoryService);
+            FilterValidator.validateCategoryExists(category,
+                    categoryService);
 
             List<Product> products = productService.getAllProducts();
-            List<Product> results = ProductFilter.filterByCategory(products, category);
+            List<Product> results = ProductFilter.filterByCategory(products,
+                    category);
             printResults(results);
 
         } catch (FilterException e) {
@@ -63,14 +74,19 @@ public class FilterController {
     }
 
     private void filterByPriceRange() {
-        double min = InputUtils.promptPositiveDouble(sc, "Enter minimum price: ");
-        double max = InputUtils.promptPositiveDouble(sc, "Enter maximum price: ");
+        double min = InputUtils.promptPositiveDouble(sc,
+                "Enter minimum price: ");
+        double max = InputUtils.promptPositiveDouble(sc,
+                "Enter maximum price: ");
 
         try {
-            FilterValidator.validatePriceRange(min, max);
+            FilterValidator.validatePriceRange(min,
+                    max);
 
             List<Product> products = productService.getAllProducts();
-            List<Product> results = ProductFilter.filterByPriceRange(products, min, max);
+            List<Product> results = ProductFilter.filterByPriceRange(products,
+                    min,
+                    max);
             printResults(results);
 
         } catch (FilterException e) {
@@ -82,18 +98,27 @@ public class FilterController {
 
     private void filterByCombined() {
         ConsoleHelper.prompt("Enter category name: ");
-        String category = sc.nextLine().trim();
-        double min = InputUtils.promptPositiveDouble(sc, "Enter minimum price: ");
-        double max = InputUtils.promptPositiveDouble(sc, "Enter maximum price: ");
+        String category = sc
+                .nextLine()
+                .trim();
+        double min = InputUtils.promptPositiveDouble(sc,
+                "Enter minimum price: ");
+        double max = InputUtils.promptPositiveDouble(sc,
+                "Enter maximum price: ");
 
         try {
             FilterValidator.validateCategoryName(category);
-            FilterValidator.validateCategoryExists(category, categoryService);
-            FilterValidator.validatePriceRange(min, max);
+            FilterValidator.validateCategoryExists(category,
+                    categoryService);
+            FilterValidator.validatePriceRange(min,
+                    max);
 
             List<Product> products = productService.getAllProducts();
-            List<Product> byCategory = ProductFilter.filterByCategory(products, category);
-            List<Product> results = ProductFilter.filterByCategoryAndPriceRange(byCategory, min, max);
+            List<Product> byCategory = ProductFilter.filterByCategory(products,
+                    category);
+            List<Product> results = ProductFilter.filterByCategoryAndPriceRange(byCategory,
+                    min,
+                    max);
             printResults(results);
 
         } catch (FilterException e) {
@@ -109,9 +134,16 @@ public class FilterController {
         } else {
             ConsoleHelper.printDivider();
             for (Product p : results) {
-                String manufacturer = ServiceFactory.getManufacturerService().getManufacturerNameById(p.getManufacturerId());
-                double avgRating = ServiceFactory.getReviewService().getAverageRatingByProductId(p.getProductId());
-                ProductRenderer.printProduct(p, manufacturer, avgRating);
+                String manufacturer =
+                        ServiceFactory
+                                .getManufacturerService()
+                                .getManufacturerNameById(p.getManufacturerId());
+                double avgRating = ServiceFactory
+                        .getReviewService()
+                        .getAverageRatingByProductId(p.getProductId());
+                ProductRenderer.printProduct(p,
+                        manufacturer,
+                        avgRating);
             }
         }
     }

@@ -26,17 +26,24 @@ public class ReviewController {
 
         while (!back) {
             ConsoleHelper.printHeader("⭐ Product Reviews");
-            ConsoleHelper.printOption("1", "View reviews for a product");
-            ConsoleHelper.printOption("2", "Leave a review");
-            ConsoleHelper.printOption("B", "Back to previous menu");
+            ConsoleHelper.printOption("1",
+                    "View reviews for a product");
+            ConsoleHelper.printOption("2",
+                    "Leave a review");
+            ConsoleHelper.printOption("B",
+                    "Back to previous menu");
             ConsoleHelper.prompt("Choose an option: ");
 
-            String choice = sc.nextLine().trim().toLowerCase();
+            String choice = sc
+                    .nextLine()
+                    .trim()
+                    .toLowerCase();
 
             switch (choice) {
                 case "1" -> {
                     ConsoleHelper.prompt("Enter product ID: ");
-                    int productId = InputUtils.promptPositiveInt(sc, "");
+                    int productId = InputUtils.promptPositiveInt(sc,
+                            "");
 
                     try {
                         Product p = productService.getProductById(productId);
@@ -45,9 +52,14 @@ public class ReviewController {
                             break;
                         }
 
-                        String manufacturer = ServiceFactory.getManufacturerService().getManufacturerNameById(p.getManufacturerId());
+                        String manufacturer =
+                                ServiceFactory
+                                        .getManufacturerService()
+                                        .getManufacturerNameById(p.getManufacturerId());
                         double avgRating = reviewService.getAverageRatingByProductId(p.getProductId());
-                        ProductRenderer.printProduct(p, manufacturer, avgRating);
+                        ProductRenderer.printProduct(p,
+                                manufacturer,
+                                avgRating);
 
                         List<Review> reviews = reviewService.getReviewsByProductId(productId);
                         if (reviews.isEmpty()) {
@@ -63,8 +75,11 @@ public class ReviewController {
 
                 case "2" -> {
                     ConsoleHelper.prompt("Enter product ID: ");
-                    int productId = InputUtils.promptPositiveInt(sc, "");
-                    int userId = SessionContext.getCurrentCustomer().getUserId();
+                    int productId = InputUtils.promptPositiveInt(sc,
+                            "");
+                    int userId = SessionContext
+                            .getCurrentCustomer()
+                            .getUserId();
 
                     try {
                         Product p = productService.getProductById(productId);
@@ -73,18 +88,27 @@ public class ReviewController {
                             break;
                         }
 
-                        String manufacturer = ServiceFactory.getManufacturerService().getManufacturerNameById(p.getManufacturerId());
+                        String manufacturer =
+                                ServiceFactory
+                                        .getManufacturerService()
+                                        .getManufacturerNameById(p.getManufacturerId());
                         double avgRating = reviewService.getAverageRatingByProductId(p.getProductId());
-                        ProductRenderer.printProduct(p, manufacturer, avgRating);
+                        ProductRenderer.printProduct(p,
+                                manufacturer,
+                                avgRating);
 
                         ConsoleHelper.prompt("Enter rating (1–5): ");
-                        int rating = InputUtils.promptPositiveInt(sc, "");
+                        int rating = InputUtils.promptPositiveInt(sc,
+                                "");
 
                         ConsoleHelper.prompt("Enter comment (optional): ");
                         String comment = sc.nextLine();
 
                         try {
-                            reviewService.addReview(userId, productId, rating, comment);
+                            reviewService.addReview(userId,
+                                    productId,
+                                    rating,
+                                    comment);
                             ConsoleHelper.printSuccess("Review submitted.");
                         } catch (ReviewException e) {
                             ConsoleHelper.printWarning(e.getMessage()); // <- friendly message here

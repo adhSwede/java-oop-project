@@ -1,46 +1,26 @@
 package factories;
+
 import repositories.*;
 
 public class RepositoryFactory {
 
-     // Lazy-loaded factory for providing singleton instances of repositories.
-     // Demo: Factory and Singleton design patterns.
-    private static CustomerRepository customerRepository;
-    private static ProductRepository productRepository;
-    private static OrderRepository orderRepository;
-    private static OrderProductRepository orderProductRepository;
-    private static CategoryRepository categoryRepository;
+    // Lazy-loaded factory for providing singleton instances of repositories.
+    // Demo: Factory and Singleton design patterns.
     private static AdminRepository adminRepository;
-    private static StoredCartRepository storedCartRepository;
-    private static ReviewRepository reviewRepository;
+    private static CategoryRepository categoryRepository;
+    private static CustomerRepository customerRepository;
     private static ManufacturerRepository manufacturerRepository;
+    private static OrderProductRepository orderProductRepository;
+    private static OrderRepository orderRepository;
+    private static ProductRepository productRepository;
+    private static ReviewRepository reviewRepository;
+    private static StoredCartRepository storedCartRepository;
 
-    public static CustomerRepository getCustomerRepository() {
-        if (customerRepository == null) {
-            customerRepository = new CustomerRepository();
+    public static AdminRepository getAdminRepository() {
+        if (adminRepository == null) {
+            adminRepository = new AdminRepository();
         }
-        return customerRepository;
-    }
-
-    public static ProductRepository getProductRepository() {
-        if (productRepository == null) {
-            productRepository = new ProductRepository();
-        }
-        return productRepository;
-    }
-
-    public static OrderRepository getOrderRepository() {
-        if (orderRepository == null) {
-            orderRepository = new OrderRepository();
-        }
-        return orderRepository;
-    }
-
-    public static OrderProductRepository getOrderProductRepository() {
-        if (orderProductRepository == null) {
-            orderProductRepository = new OrderProductRepository();
-        }
-        return orderProductRepository;
+        return adminRepository;
     }
 
     public static CategoryRepository getCategoryRepository() {
@@ -50,18 +30,39 @@ public class RepositoryFactory {
         return categoryRepository;
     }
 
-    public static AdminRepository getAdminRepository() {
-        if (adminRepository == null) {
-            adminRepository = new AdminRepository();
+    public static CustomerRepository getCustomerRepository() {
+        if (customerRepository == null) {
+            customerRepository = new CustomerRepository();
         }
-        return adminRepository;
+        return customerRepository;
     }
 
-    public static StoredCartRepository getStoredCartRepository() {
-        if (storedCartRepository == null) {
-            storedCartRepository = new StoredCartRepository();
+    public static ManufacturerRepository getManufacturerRepository() {
+        if (manufacturerRepository == null) {
+            manufacturerRepository = new ManufacturerRepository();
         }
-        return storedCartRepository;
+        return manufacturerRepository;
+    }
+
+    public static OrderProductRepository getOrderProductRepository() {
+        if (orderProductRepository == null) {
+            orderProductRepository = new OrderProductRepository();
+        }
+        return orderProductRepository;
+    }
+
+    public static OrderRepository getOrderRepository() {
+        if (orderRepository == null) {
+            orderRepository = new OrderRepository();
+        }
+        return orderRepository;
+    }
+
+    public static ProductRepository getProductRepository() {
+        if (productRepository == null) {
+            productRepository = new ProductRepository();
+        }
+        return productRepository;
     }
 
     public static ReviewRepository getReviewRepository() {
@@ -71,10 +72,10 @@ public class RepositoryFactory {
         return reviewRepository;
     }
 
-    public static ManufacturerRepository getManufacturerRepository() {
-        if (manufacturerRepository == null) {
-            manufacturerRepository = new ManufacturerRepository();
+    public static StoredCartRepository getStoredCartRepository() {
+        if (storedCartRepository == null) {
+            storedCartRepository = new StoredCartRepository();
         }
-        return manufacturerRepository;
+        return storedCartRepository;
     }
 }

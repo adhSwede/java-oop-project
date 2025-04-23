@@ -16,18 +16,24 @@ public class SqlUtils {
             }
             return conn;
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "connecting to the database");
+            ExceptionHandler.handleSQLException(e,
+                    "connecting to the database");
             throw e;
         }
     }
 
     // Execute SELECT and map the result inside the method to avoid closing problems
-    public static <T> ArrayList<T> executeAndMap(String query, RowMapper<T> mapper, String... params) throws SQLException {
+    public static <T> ArrayList<T> executeAndMap(String query,
+                                                 RowMapper<T> mapper,
+                                                 String... params) throws SQLException {
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            for (int i = 0; i < params.length; i++) {
-                stmt.setString(i + 1, params[i]);
+            for (int i = 0;
+                 i < params.length;
+                 i++) {
+                stmt.setString(i + 1,
+                        params[i]);
             }
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -38,33 +44,44 @@ public class SqlUtils {
                 return result;
             }
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "executing mapped query: " + query);
+            ExceptionHandler.handleSQLException(e,
+                    "executing mapped query: " + query);
             throw e;
         }
     }
 
     // Execute INSERT/UPDATE/DELETE
-    public static void executeUpdate(String query, Object... params) throws SQLException {
+    public static void executeUpdate(String query,
+                                     Object... params) throws SQLException {
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            for (int i = 0; i < params.length; i++) {
-                stmt.setObject(i + 1, params[i]);
+            for (int i = 0;
+                 i < params.length;
+                 i++) {
+                stmt.setObject(i + 1,
+                        params[i]);
             }
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "executing update query: " + query);
+            ExceptionHandler.handleSQLException(e,
+                    "executing update query: " + query);
             throw e;
         }
     }
 
-    public static int executeInsertAndReturnId(String query, Object... params) throws SQLException {
+    public static int executeInsertAndReturnId(String query,
+                                               Object... params) throws SQLException {
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(query,
+                     Statement.RETURN_GENERATED_KEYS)) {
 
-            for (int i = 0; i < params.length; i++) {
-                stmt.setObject(i + 1, params[i]);
+            for (int i = 0;
+                 i < params.length;
+                 i++) {
+                stmt.setObject(i + 1,
+                        params[i]);
             }
 
             stmt.executeUpdate();
@@ -77,7 +94,8 @@ public class SqlUtils {
             }
 
         } catch (SQLException e) {
-            ExceptionHandler.handleSQLException(e, "executing insert with return ID: " + query);
+            ExceptionHandler.handleSQLException(e,
+                    "executing insert with return ID: " + query);
             throw e;
         }
     }

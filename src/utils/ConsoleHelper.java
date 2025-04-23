@@ -1,8 +1,8 @@
 package utils;
 
-import static constants.Colors.*;
-
 import java.util.List;
+
+import static constants.Colors.*;
 
 public class ConsoleHelper {
 
@@ -29,8 +29,13 @@ public class ConsoleHelper {
         System.out.println(CYAN + "-".repeat(40) + RESET);
     }
 
-    public static void printOption(String key, String description) {
-        System.out.printf(" [%s%s%s] %s%n", BOLD, key.toUpperCase(), RESET, description);
+    public static void printOption(String key,
+                                   String description) {
+        System.out.printf(" [%s%s%s] %s%n",
+                BOLD,
+                key.toUpperCase(),
+                RESET,
+                description);
     }
 
     public static void printTitle(String message) {

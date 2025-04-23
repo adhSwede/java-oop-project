@@ -21,14 +21,22 @@ public class CustomerController {
 
         do {
             ConsoleHelper.printHeader("👤 Customer Menu");
-            ConsoleHelper.printOption("1", "Get all customers");
-            ConsoleHelper.printOption("2", "Get one customer by ID");
-            ConsoleHelper.printOption("3", "Add new customer");
-            ConsoleHelper.printOption("4", "Update customer email");
-            ConsoleHelper.printOption("B", "Back to previous menu");
+            ConsoleHelper.printOption("1",
+                    "Get all customers");
+            ConsoleHelper.printOption("2",
+                    "Get one customer by ID");
+            ConsoleHelper.printOption("3",
+                    "Add new customer");
+            ConsoleHelper.printOption("4",
+                    "Update customer email");
+            ConsoleHelper.printOption("B",
+                    "Back to previous menu");
             ConsoleHelper.prompt("Select an option: ");
 
-            select = sc.nextLine().trim().toLowerCase();
+            select = sc
+                    .nextLine()
+                    .trim()
+                    .toLowerCase();
 
             switch (select) {
                 case "1" -> getAllCustomers();
@@ -75,42 +83,37 @@ public class CustomerController {
         Scanner sc = new Scanner(System.in);
 
         ConsoleHelper.printDivider();
-        String name = InputUtils.promptUntilValid(
-                sc,
+        String name = InputUtils.promptUntilValid(sc,
                 "Enter customer name: ",
                 input -> !input.isBlank(),
-                "Name cannot be empty."
-        );
+                "Name " +
+                        "cannot be empty.");
 
-        String email = InputUtils.promptUntilValid(
-                sc,
+        String email = InputUtils.promptUntilValid(sc,
                 "Enter customer email: ",
                 ValidationUtils::isValidEmail,
-                "Invalid email format."
-        );
+                "Invalid email format.");
 
-        String phone = InputUtils.promptUntilValid(
-                sc,
+        String phone = InputUtils.promptUntilValid(sc,
                 "Enter customer phone number: ",
                 ValidationUtils::isValidPhoneNumber,
-                "Invalid phone number. Must be 10 digits."
-        );
+                "Invalid phone number. Must be 10 digits.");
 
-        String address = InputUtils.promptUntilValid(
-                sc,
+        String address = InputUtils.promptUntilValid(sc,
                 "Enter customer address: ",
                 input -> !input.isBlank(),
-                "Address cannot be empty."
-        );
+                "Address cannot be empty.");
 
-        String password = InputUtils.promptUntilValid(
-                sc,
+        String password = InputUtils.promptUntilValid(sc,
                 "Enter customer password: ",
                 input -> !input.isBlank(),
-                "Password cannot be empty."
-        );
+                "Password cannot be empty.");
 
-        Customer newCustomer = new Customer(name, email, phone, address, password);
+        Customer newCustomer = new Customer(name,
+                email,
+                phone,
+                address,
+                password);
         customerService.addCustomer(newCustomer);
         ConsoleHelper.printSuccess("Customer added successfully.");
     }
@@ -124,16 +127,17 @@ public class CustomerController {
             return;
         }
 
-        int customerId = SessionContext.getCurrentCustomer().getUserId();
+        int customerId = SessionContext
+                .getCurrentCustomer()
+                .getUserId();
 
-        String newEmail = InputUtils.promptUntilValid(
-                sc,
+        String newEmail = InputUtils.promptUntilValid(sc,
                 "Enter new email for customer: ",
                 ValidationUtils::isValidEmail,
-                "Invalid email format."
-        );
+                "Invalid email format.");
 
-        customerService.updateCustomerEmail(customerId, newEmail);
+        customerService.updateCustomerEmail(customerId,
+                newEmail);
         ConsoleHelper.printSuccess("Customer updated successfully.");
     }
 }
