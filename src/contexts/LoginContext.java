@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class LoginContext {
     private static Customer loggedInCustomer;  // Singleton for current session
 
-    // Log in the user
+    // Log in
     public static boolean loginAsCustomer(String email,
                                           String password) throws SQLException {
         CustomerService customerService = new CustomerService();
@@ -22,18 +22,18 @@ public class LoginContext {
         return false;
     }
 
-    // Log out the user
+    // Log out
     public static void logout() {
         loggedInCustomer = null;
         SessionContext.clear();
     }
 
-    // Check if a user is logged in
+    // Check if logged in
     public static boolean isLoggedIn() {
         return loggedInCustomer != null;
     }
 
-    // Get the logged-in user
+    // Get logged-in user
     public static Customer getLoggedInUser() {
         return loggedInCustomer;
     }

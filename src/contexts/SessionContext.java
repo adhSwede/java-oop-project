@@ -38,7 +38,7 @@ public class SessionContext {
         return (currentUser instanceof Customer customer) ? customer : null;
     }
 
-    // Safe way to get the logged-in user ID
+    // Safe way to get logged-in id
     public static Integer getLoggedInUserId() {
         if (getCurrentCustomer() == null) {
             ConsoleHelper.printError("You must be logged in to perform this action.");
